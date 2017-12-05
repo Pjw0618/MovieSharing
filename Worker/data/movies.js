@@ -8,11 +8,20 @@ const uuid = require('node-uuid');
 
 let exportedMethods = {
     getAllMovies() {
-
+        return movies().then((movieCollection) => {
+            return movieCollection.find({}).toArray();
+        });
     },
 
     getMovieById(id) {
-
+        return movies().then((movieCollection) => {
+            return movieCollection.findOne({ name = movie.name }).then((movie)=>{
+                if(!movie){
+                    throw "Movie not found!";
+                }
+                return movie;
+            })
+        });
     },
 
     getMoviesByDirector() {
@@ -28,7 +37,7 @@ let exportedMethods = {
     },
 
     addMovie(movie) {
-        return movies().then((movieCollection) =>{
+        return movies().then((movieCollection) => {
             //data from front end includes name, year, directors, stars, writers, description, poster and category
             // xss process in API server
             let newMovie = {
@@ -36,28 +45,28 @@ let exportedMethods = {
                 name = movie.name,
                 year = movie.year,
                 score = undefined,
-                watchedUsers = [],
-                wishingUsers = [],
+                watchedUsers =[],
+                wishingUsers =[],
                 directors = movie.directors,
                 stars = movie.stars,
                 writers = movie.writers,
                 description = movie.description,
                 poster = im.processPoster(movie.poster),
-                screenShots = [],
+                screenShots =[],
                 category = movie.category
             };
             return movieCollection.findOne({
                 name = movie.name
-            }).then((movie) =>{
-                if(book){
+            }).then((movie) => {
+                if (book) {
                     throw "This movie already exists!";
-                } else{
-                    return movieCollection.insertOne(newMovie).then((insertInfo) =>{
+                } else {
+                    return movieCollection.insertOne(newMovie).then((insertInfo) => {
                         return insertInfo.insertedId;
-                    }).then((newId) =>{
+                    }).then((newId) => {
                         //todo: consistent in ES
                         //only stores basic informations in ES
-                        return this.getMovieById(newId).then((insertedMovie) =>{
+                        return this.getMovieById(newId).then((insertedMovie) => {
                             let copy = {
                                 uuid = insertedMovie._id,
                                 name = insertedMovie.name,
@@ -68,8 +77,15 @@ let exportedMethods = {
                                 description = insertedMovie.description,
                                 category = insertedMovie.category
                             }
-                            es.addMovie
+                            es.addMovie(copy);
+                            return insertedMovie;
+                        }).then((insertedMovie) => {
+                            return insertedMovie;
+                        }).catch((e) => {
+                            throw "Error inserting into ES!"
                         })
+                    }).catch((e) => {
+                        throw "Error inserting into MongoDB!"
                     })
                 }
             })
