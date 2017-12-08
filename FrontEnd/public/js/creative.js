@@ -1,9 +1,9 @@
 (function($) {
   "use strict"; // Start of use strict
-
+  
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+    if (window.location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && window.location.hostname == this.hostname) {
       var target = $(this.hash);
       target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
       if (target.length) {
@@ -40,17 +40,17 @@
   $(window).scroll(navbarCollapse);
 
   // Scroll reveal calls
-  window.sr = ScrollReveal();
-  sr.reveal('.sr-icons', {
+  window.sr = new ScrollReveal();
+  window.sr.reveal('.sr-icons', {
     duration: 600,
     scale: 0.3,
     distance: '0px'
   }, 200);
-  sr.reveal('.sr-button', {
+  window.sr.reveal('.sr-button', {
     duration: 1000,
     delay: 200
   });
-  sr.reveal('.sr-contact', {
+  window.sr.reveal('.sr-contact', {
     duration: 600,
     scale: 0.3,
     distance: '0px'
@@ -71,5 +71,4 @@
       tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
     }
   });
-
-})(jQuery); // End of use strict
+})(jQuery) // End of use strict

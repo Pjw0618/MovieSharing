@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonToolbar} from 'react-bootstrap';
+import { Button, ButtonToolbar, FormGroup, Form} from 'react-bootstrap';
 import { Link, IndexLink } from 'react-router-dom';
 
 class TopBar extends React.Component {
@@ -14,7 +14,7 @@ class TopBar extends React.Component {
                     <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ml-auto">
                         {/* Category */}
-                        {/* Top 10 */}                        
+                        {/* Searching */}                       
                         <li className="nav-item">
                             <Link className="nav-link js-scroll-trigger" to="/Login">Log In</Link>
                         </li>
