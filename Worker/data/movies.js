@@ -15,25 +15,13 @@ let exportedMethods = {
 
     getMovieById(id) {
         return movies().then((movieCollection) => {
-            return movieCollection.findOne({ name = movie.name }).then((movie)=>{
-                if(!movie){
+            return movieCollection.findOne({ name = movie.name }).then((movie) => {
+                if (!movie) {
                     throw "Movie not found!";
                 }
                 return movie;
             })
         });
-    },
-
-    getMoviesByDirector() {
-
-    },
-
-    getMoviesByStar() {
-
-    },
-
-    getMoviesByWriter() {
-
     },
 
     addMovie(movie) {
@@ -67,8 +55,8 @@ let exportedMethods = {
                         //todo: consistent in ES
                         //only stores basic informations in ES
                         return this.getMovieById(newId).then((insertedMovie) => {
+                            let id = insertedMovie._id;
                             let copy = {
-                                uuid = insertedMovie._id,
                                 name = insertedMovie.name,
                                 year = insertedMovie.year,
                                 directors = insertedMovie.directors,
@@ -77,7 +65,7 @@ let exportedMethods = {
                                 description = insertedMovie.description,
                                 category = insertedMovie.category
                             }
-                            es.addMovie(copy);
+                            es.addMovie(id, copy);
                             return insertedMovie;
                         }).then((insertedMovie) => {
                             return insertedMovie;
@@ -92,11 +80,29 @@ let exportedMethods = {
         });
     },
 
+    /*
     removeMovie() {
 
     },
+    */
 
-    updateMovieInfo() {
+    // call es.addMovie to update in ES
+    updateMovieInfo(updateMovie) {
+
+    },
+    
+    // search given keyword in all movie
+    searchInMovie(keyword) {
+
+    },
+
+    // search for given category
+    searchByCategory(category) {
+
+    },
+
+    // search for keyword in given category
+    searchInCategory(category, keyword) {
 
     },
 
@@ -108,9 +114,15 @@ let exportedMethods = {
 
     },
 
-    updateWatchedTimes() {
+    updateWatchedUsers() {
 
-    }
+    },
+
+    updateWishingUsers() {
+
+    },
+
+
 
 }
 
