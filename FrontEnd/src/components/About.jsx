@@ -31,7 +31,7 @@ class About extends React.Component {
                         <div className="col-lg-3 col-md-6 text-center">
                             <div className="service-box mt-5 mx-auto">
                             <img className="portrait Jiawen" src="https://img1.etsystatic.com/191/0/7976576/il_570xN.1360737701_fc6x.jpg" />
-                            <h3 className="mb-3">Jaoqi Du</h3>
+                            <h3 className="mb-3">Yaoqi Du</h3>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6 text-center">
