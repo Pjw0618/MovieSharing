@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import '../style/css/creative.min.css';
+import '../style/css/Portrait.css';
 
 class About extends React.Component {
     render() {
@@ -9,10 +9,36 @@ class About extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8 mx-auto text-center">
-                            <h2 className="section-heading text-white">We've got what you need!</h2>
+                            <h2 className="section-heading text-white">Team members</h2>
                             <hr className="light my-4" />
-                            <p className="text-faded mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
-                            <a className="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
+                        </div>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-3 col-md-6 text-center">
+                            <div className="service-box mt-5 mx-auto">
+                            <img className="portrait Jiawen" src="https://img0.etsystatic.com/203/0/7976576/il_570xN.1313475884_m5b9.jpg" />
+                            <h3 className="mb-3">Jiawen Peng</h3>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 text-center">
+                            <div className="service-box mt-5 mx-auto">
+                            <img className="portrait Jiawen" src="https://img1.etsystatic.com/207/0/7976576/il_570xN.1360738213_l3t4.jpg" />
+                            <h3 className="mb-3">Yi Ding</h3>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 text-center">
+                            <div className="service-box mt-5 mx-auto">
+                            <img className="portrait Jiawen" src="https://img1.etsystatic.com/191/0/7976576/il_570xN.1360737701_fc6x.jpg" />
+                            <h3 className="mb-3">Jaoqi Du</h3>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 text-center">
+                            <div className="service-box mt-5 mx-auto">
+                            <img className="portrait Jiawen" src="https://img1.etsystatic.com/185/0/7976576/il_570xN.1359095849_gus1.jpg" />
+                            <h3 className="mb-3">YunanDai</h3>
+                            </div>
                         </div>
                     </div>
                 </div>

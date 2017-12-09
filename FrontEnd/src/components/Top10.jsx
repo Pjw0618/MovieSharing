@@ -2,10 +2,11 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 var Top10Body = [];
 var Top10List;
+//testing data
 var pic1 = "http://cdn.playbuzz.com/cdn/db6a5640-13e7-43b9-83fa-749193b62498/bb0b96c2-8330-453e-8ab2-471199af2391.jpg";
 for (var i = 1; i < 10; i++){
     Top10Body.push(
-    <div className="col-lg-4 col-sm-6">
+    <div className="col-lg-4 col-sm-6" key={i}>
         <a className="portfolio-box" href={pic1}>
             <img className="img-fluid" src={pic1} alt="" />
             <div className="portfolio-box-caption">
