@@ -4,7 +4,7 @@ const im = require('imagemagick');
 
 let exportedMethods = {
     processPoster(url, id){
-        const desPath = "./FrontEnd/public/processedposters/";
+        const desPath = "../../FrontEnd/public/processedposters/";
         var optionsObj = {
             srcPath: url,
             dstPath: desPath + id + ".png",

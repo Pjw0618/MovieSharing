@@ -13,6 +13,19 @@ let exportedMethods = {
         });
     },
 
+    getTopTen() {
+        return this.getAllMovies((movies) => {
+            movies.sort((movie1, movie2) => {
+                let score1 = movie1.score;
+                let score2 = movie2.score;
+                if (!score1) score1 = -1;
+                if (!score2) score2 = -1;
+                return score2 - score1;
+            });
+            return movies.slice(0, (movies.length < 10 ? movies.length : 10));
+        });
+    },
+
     getMovieById(id) {
         return movies().then((movieCollection) => {
             return movieCollection.findOne({ name = movie.name }).then((movie) => {
@@ -33,13 +46,13 @@ let exportedMethods = {
                 name = movie.name,
                 year = movie.year,
                 score = undefined,
+                commentNum = 0,
                 watchedUsers =[],
                 wishingUsers =[],
                 directors = movie.directors,
                 stars = movie.stars,
                 writers = movie.writers,
                 description = movie.description,
-                
                 screenShots =[],
                 category = movie.category
             };
@@ -141,24 +154,59 @@ let exportedMethods = {
         })
     },
 
-    addScreenShotToMovie() {
-
+    addScreenShotToMovie(movieId, pictureUrl) {
+        return movies().then((movieCollection) => {
+            return movieCollection.updateOne({ _id: movieId }, {
+                $addToSet: {
+                    screenShots: pictureUrl
+                }
+            });
+        });
     },
 
-    updateScore() {
+    updateScore(movieId, score) {
+        return movies().then((movieCollection) => {
+            return this.getMovieById(id).then((movie) => {
+                let newScore;
+                if (!movie.score || movie.commentNum === 0) {
+                    newScore = score;
+                } else {
+                    newScore = (movie.score * movie.commentNum + score) / (movie.commentNum + 1);
+                }
+                let updateInfo = {
+                    score: newScore,
+                    commentNum: movie.commentNum + 1
+                };
 
+                let updateCommand = {
+                    $set: updateInfo
+                };
+                return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
+                    return this.getMovieById(movieId);
+                });
+            });
+        });
     },
 
-    updateWatchedUsers() {
-
+    updateWatchedUsers(movieId, userId) {
+        return movies().then((movieCollection) => {
+            return movieCollection.updateOne({ _id: movieId }, {
+                $addToSet: {
+                    watchedUsers: userId
+                }
+            });
+        });
     },
 
     updateWishingUsers() {
-
+        return movies().then((movieCollection) => {
+            return movieCollection.updateOne({ _id: movieId }, {
+                $addToSet: {
+                    wishingUsers: userId
+                }
+            });
+        });
     },
-
-
-
 }
 
 module.exports = exportedMethods;
