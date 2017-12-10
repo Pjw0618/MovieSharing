@@ -39,10 +39,11 @@ let exportedMethods = {
                 stars = movie.stars,
                 writers = movie.writers,
                 description = movie.description,
-                poster = im.processPoster(movie.poster),
+                
                 screenShots =[],
                 category = movie.category
             };
+            newMovie.poster = im.processPoster(movie.poster, newMovie._id);
             return movieCollection.findOne({
                 name = movie.name
             }).then((movie) => {
@@ -67,8 +68,6 @@ let exportedMethods = {
                             }
                             es.addMovie(id, copy);
                             return insertedMovie;
-                        }).then((insertedMovie) => {
-                            return insertedMovie;
                         }).catch((e) => {
                             throw "Error inserting into ES!"
                         })
@@ -87,23 +86,59 @@ let exportedMethods = {
     */
 
     // call es.addMovie to update in ES
-    updateMovieInfo(updateMovie) {
 
+    updateMovieInfo(updateMovie) {
+        return movies().then((movieCollection) => {
+            let updateInfo = {
+                name = updateMovie.name,
+                year = updateMovie.year,
+                directors = updateMovie.directors,
+                stars = updateMovie.stars,
+                writers = updateMovie.writers,
+                description = updateMovie.description,
+                category = updateMovie.category
+            }
+            let updateCommand = {
+                $set: updateInfo
+            };
+            return movieCollection.updateOne({ _id: updateMovie._id }, updateCommand).then((result) => {
+                es.addMovie(updateMovie._id, updateInfo);
+                return this.getMovieById(updateMovie._id);
+            })
+        })
     },
-    
+
     // search given keyword in all movie
     searchInMovie(keyword) {
-
+        return es.searchInMovie(keyword).then((results) => {
+            let movies = [];
+            results.forEach((result) => {
+                movies.push(this.getMovieById(result._id));
+            })
+            return movies;
+        })
     },
 
     // search for given category
     searchByCategory(category) {
-
+        return es.searchByCategory(category).then((results) => {
+            let movies = [];
+            results.forEach((result) => {
+                movies.push(this.getMovieById(result._id));
+            })
+            return movies;
+        })
     },
 
     // search for keyword in given category
     searchInCategory(category, keyword) {
-
+        return es.searchInCategory(category, keyword).then((results) => {
+            let movies = [];
+            results.forEach((result) => {
+                movies.push(this.getMovieById(result._id));
+            })
+            return movies;
+        })
     },
 
     addScreenShotToMovie() {

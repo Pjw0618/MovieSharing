@@ -1,11 +1,11 @@
 const movies = require('./movies');
 const users = require('./users');
 const comments = require('./comments');
-const shargeMessages = require('./shargeMessages');
+const shargemessages = require('./shargemessages');
 
 module.exports = {
     movies: movies,
     users: users,
     comments: comments,
-    shargeMessages: shargeMessages
+    shargemessages: shargemessages
 };
