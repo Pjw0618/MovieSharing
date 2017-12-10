@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import '../style/css/Searching.css';
 
 class Searching extends React.Component {
