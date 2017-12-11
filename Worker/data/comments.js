@@ -61,7 +61,7 @@ let exportedMethods = {
             return Promise.reject("Invalid id");
         }
         return comments().then((commentsCollection) => {
-            return this.getCommentsByDbId(id).then((originComment) => {
+            return this.getCommentsById(id).then((originComment) => {
                 return commentsCollection.removeOne({ _id: id }).then((deleteInfo) => {
                     if (deleteInfo.deletedCount === 0) {
                         throw (`Could not delete comment with id of ${id}`);
@@ -79,7 +79,7 @@ let exportedMethods = {
     // support partly updating
     updateComment(id, updatedContent, updatedRating, updatedDate) {
         return comments().then((commentsCollection) => {
-            return this.getCommentsByDbId(id).then((originComment) => {
+            return this.getCommentsById(id).then((originComment) => {
                 let updatedComment = {
                     userId: originComment.userId,
                     movieId: originComment.movieId,
