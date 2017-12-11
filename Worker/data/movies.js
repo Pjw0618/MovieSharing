@@ -184,7 +184,7 @@ let exportedMethods = {
         });
     },
 
-    //call it when add mew comment
+    //call it when add new comment
     addScore(movieId, score) {
         return movies().then((movieCollection) => {
             return this.getMovieById(id).then((movie) => {
@@ -223,6 +223,30 @@ let exportedMethods = {
                 };
                 let updateCommand = {
                     $set: updateInfo
+                };
+                return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
+                    return this.getMovieById(movieId);
+                });
+            });
+        });
+    },
+
+    //call it when delete comment
+    removeScore(movieId, score) {
+        return movies().then((movieCollection) => {
+            return this.getMovieById(id).then((movie) => {
+                let newScore;
+                if (movie.commentNum === 1) {
+                    newScore = undefined;
+                } else {
+                    newScore = (movie.score * movie.commentNum - score) / (movie.commentNum - 1);
+                }
+                let updateInfo = {
+                    score: newScore,
+                };
+                let updateCommand = {
+                    $set: updateInfo,
+                    commentNum: movie.commentNum - 1
                 };
                 return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
                     return this.getMovieById(movieId);
