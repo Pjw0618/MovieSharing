@@ -6,7 +6,8 @@
 body,
 html {
   width: 100%;
-  height: 100%; }
+  height: 100%; 
+  background: white;}
 
 body {
   font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif; }
@@ -134,7 +135,7 @@ body {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 56px);
-  background-image: url("../img/background.jpg");
+  background-image: url("https://ohmy.disney.com/wp-content/uploads/2015/05/Cars-2-Background.jpg");
   background-position: center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
