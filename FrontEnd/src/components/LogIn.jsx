@@ -8,12 +8,39 @@ var clear = {
 }
 
 class LogIn extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username:"",
+            password: ""
+        };
+    
+        this.handleInput = this.handleInput.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleInput(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    //waiting for the login api
+    handleSubmit(event) {
+        // alert('Username: ' + this.state.username + '; Password: ' + this.state.password);
+        event.preventDefault();
+    }
+      
     render() {
         return (
             <div className="login-card">
                 <TopBar/>
                 {/* Login form */}
-                <form id="login-form" className="col-lg-12">
+                <form id="login-form" className="col-lg-12" onSubmit={this.handleSubmit}>
                     {/* Logo */}
                     <div className="col-lg-12 logo-kapsul">
                         <img width="100" className="logo" src="https://selimdoyranli.com/cdn/material-form/img/logo.png" alt="Logo" />
@@ -21,19 +48,20 @@ class LogIn extends React.Component {
 
                     <div style={clear}></div>
                     <div className="group">
-                        <input type="text" required />
+                        <input name="username" value={this.state.username} type="text" onChange={this.handleInput} required />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label><i className="material-icons input-ikon">person_outline</i><span className="span-input">User Name</span></label>
                     </div>
 
                     <div className="group">
-                        <input type="password" required />
+                        <input name="password" value={this.state.password} type="password" onChange={this.handleInput} required />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label><i className="material-icons input-sifre-ikon">lock</i><span className="span-input">Password</span></label>
                     </div>
-                    <a href="javascript:void(0);" className="giris-yap-buton">Log In</a>
+                    <input className="giris-yap-buton" type="submit" value="Log In" />
+                    {/* <a href="javascript:void(0);" className="giris-yap-buton" onClick={document.getElementById('login-form').submit()}>Log In</a> */}
 
                     <div className="forgot-and-create tab-menu">
                         <a className="retrieve-link" href="javascript:void('retrieve-link');">Forgot password ?</a>

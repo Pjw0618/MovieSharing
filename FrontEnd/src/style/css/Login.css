@@ -222,6 +222,8 @@ input:valid ~ label {
     border-radius: 3px;
     outline: none;
     opacity: 0.8;
+    width: 100%;
+    border-style: none;
 }
 .forgot-and-create {
     margin: 20px 0px;
