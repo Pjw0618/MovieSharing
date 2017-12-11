@@ -1,6 +1,8 @@
 (function($) {
   "use strict"; // Start of use strict
   
+  $("body").addClass(window.location.pathname.substring(1));
+  
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
     if (window.location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && window.location.hostname == this.hostname) {

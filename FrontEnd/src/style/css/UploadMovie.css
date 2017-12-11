@@ -1,11 +1,11 @@
-body.Login {
+body.UploadMovie {
     margin: 0;
     padding: 0;
     background:#eee;
     font-family: roboto;
     display:flex; /* You delete it on your web page */
     justify-content:center;/* and this - delete */
-    background: url('https://static.pexels.com/photos/573241/pexels-photo-573241.jpeg') center center fixed;
+    background: url('https://static.pexels.com/photos/693651/pexels-photo-693651.jpeg') center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -17,11 +17,11 @@ a:focus {
     text-decoration: none;
     color: #eee;
 }
-.login-card {
-    width: 400px;
-    margin-top: 20%;
-    background: black;
-    opacity: 0.8;
+.uploadMovie-card {
+    width: 800px;
+    margin-top: 15%;
+    background: white;
+    opacity: 0.9;
     background-size: cover;
     -moz-background-size: cover;
     -ms-background-size: cover;
@@ -45,7 +45,7 @@ a:focus {
     justify-content: center;
     font-family: roboto!important;
 }
-.login-card:after {
+.uploadMovie-card:after {
     /* background: linear-gradient(-135deg, rgb(63, 81, 181), rgb(233, 30, 99)); */
     /* Login Card Arkaplan Rengi */
     
@@ -61,44 +61,46 @@ a:focus {
     opacity: 0.8;
     z-index: 3;
 }
-.login-card > form {
+.uploadMovie-card > form {
     z-index: 4;
     position: relative;
     padding: 0px 25px;
     width: 100%;
 }
-.logo-kapsul {
+.share-gif-kapsul {
     text-align: center;
     position: relative;
     opacity: 0.8;
 }
-.logo {
-    height: auto;
+.share-gif {
+    /* height: auto; */
+    width: 200px;
+    border-radius: 50%;
     padding: 50px 0px;
 }
 /* form başlangıç stiller ------------------------------- */
 
-.group {
+.upload-group {
     position: relative;
     margin-bottom: 45px;
 }
-.group input {
+.upload-group input {
     font-size: 18px;
     padding: 10px 10px 10px 10px;
     display: block;
     width: 100%;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: none;
     background: none;
-    color: #eee;
+    color: black;
 }
-.group input:focus {
+.upload-group input:focus {
     outline: none;
 }
 /* LABEL ======================================= */
 
-.group label {
-    color: rgba(255, 255, 255, 0.5);
+.upload-group label {
+    color: black;
     font-size: 18px;
     font-weight: normal;
     position: absolute;
@@ -111,11 +113,11 @@ a:focus {
 }
 /* active durum */
 
-.group input:focus ~ label,
+.upload-group input:focus ~ label,
 input:valid ~ label {
     top: -20px;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(6, 30, 75, 0.7);
 }
 /* BOTTOM BARS ================================= */
 
@@ -144,8 +146,8 @@ input:valid ~ label {
 }
 /* active durum bar */
 
-.group input:focus ~ .bar:before,
-.group input:focus ~ .bar:after {
+.upload-group input:focus ~ .bar:before,
+.upload-group input:focus ~ .bar:after {
     width: 50%;
 }
 /* HIGHLIGHTER ================================== */
@@ -161,7 +163,7 @@ input:valid ~ label {
 }
 /* active durum */
 
-.group input:focus ~ .highlight {
+.upload-group input:focus ~ .highlight {
     -webkit-animation: inputHighlighter 0.3s ease;
     -moz-animation: inputHighlighter 0.3s ease;
     animation: inputHighlighter 0.3s ease;
@@ -207,6 +209,7 @@ input:valid ~ label {
     margin-left: 10px;
     position: relative;
     top: -5px;
+    text-transform: uppercase;
 }
 .giris-yap-buton,
 .kayit-ol-buton,
