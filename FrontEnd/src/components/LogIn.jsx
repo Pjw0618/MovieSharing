@@ -37,40 +37,42 @@ class LogIn extends React.Component {
       
     render() {
         return (
-            <div className="login-card">
-                <TopBar/>
-                {/* Login form */}
-                <form id="login-form" className="col-lg-12" onSubmit={this.handleSubmit}>
-                    {/* Logo */}
-                    <div className="col-lg-12 logo-kapsul">
-                        <img width="100" className="logo" src="https://selimdoyranli.com/cdn/material-form/img/logo.png" alt="Logo" />
-                    </div>
+            <div className="root-login">
+                <div className="login-card">
+                    <TopBar/>
+                    {/* Login form */}
+                    <form id="login-form" className="col-lg-12" onSubmit={this.handleSubmit}>
+                        {/* Logo */}
+                        <div className="col-lg-12 logo-kapsul">
+                            <img width="100" className="logo" src="https://selimdoyranli.com/cdn/material-form/img/logo.png" alt="Logo" />
+                        </div>
 
-                    <div style={clear}></div>
-                    <div className="group">
-                        <input name="username" value={this.state.username} type="text" onChange={this.handleInput} required />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">person_outline</i><span className="span-input">User Name</span></label>
-                    </div>
+                        <div style={clear}></div>
+                        <div className="group">
+                            <input name="username" value={this.state.username} type="text" onChange={this.handleInput} required />
+                            <span className="highlight"></span>
+                            <span className="bar"></span>
+                            <label><i className="material-icons input-ikon">person_outline</i><span className="span-input">User Name</span></label>
+                        </div>
 
-                    <div className="group">
-                        <input name="password" value={this.state.password} type="password" onChange={this.handleInput} required />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-sifre-ikon">lock</i><span className="span-input">Password</span></label>
-                    </div>
-                    <input className="giris-yap-buton" type="submit" value="Log In" />
-                    {/* <a href="javascript:void(0);" className="giris-yap-buton" onClick={document.getElementById('login-form').submit()}>Log In</a> */}
+                        <div className="group">
+                            <input name="password" value={this.state.password} type="password" onChange={this.handleInput} required />
+                            <span className="highlight"></span>
+                            <span className="bar"></span>
+                            <label><i className="material-icons input-sifre-ikon">lock</i><span className="span-input">Password</span></label>
+                        </div>
+                        <input className="giris-yap-buton" type="submit" value="Log In" />
 
-                    <div className="forgot-and-create tab-menu">
-                        <a className="retrieve-link" href="javascript:void('retrieve-link');">Forgot password ?</a>
-                        <a className="register-link" href="javascript:void('register-link');">Register</a>
-                    </div>
-                </form>
-                <Register />
-                <RetrievePass />
-    	    </div>
+                        <div className="forgot-and-create tab-menu">
+                            <a className="retrieve-link" href="javascript:void('retrieve-link');">Forgot password ?</a>
+                            <a className="register-link" href="javascript:void('register-link');">Register</a>
+                        </div>
+                    </form>
+                    <Register />
+                    <RetrievePass />
+                </div>
+            </div>
+            
         )
     }
 }
