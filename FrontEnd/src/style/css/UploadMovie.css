@@ -83,6 +83,7 @@ a:focus {
 .upload-group {
     position: relative;
     margin-bottom: 45px;
+    display: inline-block;
 }
 .upload-group input {
     font-size: 18px;
@@ -251,3 +252,24 @@ input:valid ~ label {
 .login-link:hover, .register-link:hover, .retrieve-link:hover {
     color: white;
 }
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+    overflow: hidden;
+    position: relative;
+    z-index: -1;
+}
+.inputfile label {
+    text-transform: uppercase;
+}
+  
+  .thumbnail {
+    height: 150px;
+    margin: 10px;
+  }
+  
+  #result div{
+    display: inline;
+  }
