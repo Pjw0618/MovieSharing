@@ -14,7 +14,7 @@ class MastTop extends React.Component {
                         </div>
                         <div className="col-lg-8 mx-auto">
                             <p className="text-faded mb-5">Start Movist can help you find out more movies you like! Just join us, post your favorite movies and enjoy!</p>
-                            <a className="btn btn-primary btn-xl js-scroll-trigger" href="#Top10">Find Out More</a>
+                            <a className="btn btn-primary btn-xl js-scroll-trigger" href="/UploadMovie">Upload NOW</a>
                         </div>
                     </div>
                 </div>
