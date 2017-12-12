@@ -2,6 +2,7 @@ const data=require("./data");
 
 const sharedata=data.sharemessages;
 const commentdata = data.comments;
+const moviedata = data.movies;
 const dbConnection = require("./config/mongoConnection");
 const redis = require("redis");
 const redisConnection = require("./redis/redis-connection");
@@ -208,6 +209,24 @@ redisConnection.on('sharemessage-delete:request:*', async (message, channel)=>{
     await sharedata.removeMessage(id).then(async (shareInfo)=>{
         let response = await nrpSender.sendMessage({
             
+            redis: redisConnection,
+            eventName: "delete-from-back-share",
+            data: {
+                
+                message: await shareInfo
+            },
+            expectsResponse: false
+        });
+    })
+});
+
+/***************  movie methods  ************/
+redisConnection.on('movie-getById:request:*', async (message, channel)=>{
+    console.log("redis");
+    console.log(message.data.message);
+    let id = message.data.message
+    await moviedata.getMovieById(id).then(async (shareInfo)=>{
+        let response = await nrpSender.sendMessage({
             redis: redisConnection,
             eventName: "delete-from-back-share",
             data: {
