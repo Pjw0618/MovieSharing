@@ -219,21 +219,3 @@ redisConnection.on('sharemessage-delete:request:*', async (message, channel)=>{
         });
     })
 });
-
-/***************  movie methods  ************/
-redisConnection.on('movie-getById:request:*', async (message, channel)=>{
-    console.log("redis");
-    console.log(message.data.message);
-    let id = message.data.message
-    await moviedata.getMovieById(id).then(async (shareInfo)=>{
-        let response = await nrpSender.sendMessage({
-            redis: redisConnection,
-            eventName: "delete-from-back-share",
-            data: {
-                
-                message: await shareInfo
-            },
-            expectsResponse: false
-        });
-    })
-});
