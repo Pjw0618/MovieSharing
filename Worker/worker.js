@@ -2,6 +2,7 @@ const data=require("./data");
 
 const sharedata=data.sharemessages;
 const commentdata = data.comments;
+const userdata = data.users;
 const dbConnection = require("./config/mongoConnection");
 const redis = require("redis");
 const redisConnection = require("./redis/redis-connection");
@@ -9,6 +10,10 @@ const nrpSender = require("./redis/nrp-sender-shim")
 /*dbConnection().then((db)=>{
     return db.dropDatabase()
 })*/
+
+// passport configuration
+const passportCon = require("./config/passport");
+
 //comment
 redisConnection.on('comment-post:request:*', async (message, channel)=>{
     
