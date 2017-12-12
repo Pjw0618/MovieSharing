@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 var CategoryList = [];// get all categories
 
 class Category extends React.Component {
