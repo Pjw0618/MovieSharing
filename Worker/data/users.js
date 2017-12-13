@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 const uuid = require('node-uuid');
 const bcrypt = require("brcypt-nodejs");
+const movies = require('./movies');
 let exportedMethods = {
     getAllUsers() {
         return users().then((usersCollection)=>{
@@ -143,6 +144,7 @@ let exportedMethods = {
                 let updateData = {watchedList: user.watchedList.push(movie)};
                 let updateCommand = {$set: updateData}
                 return usersCollection.updateOne({_id: id}, updateCommand).then(()=>{
+                    movies.updateWatchedUsers(movie, id);
                     return this.getUserByDbId(id);
                 })
             })
@@ -150,13 +152,14 @@ let exportedMethods = {
         },
 
     //updating wishing in movies
-    addToWishList() {
+    addToWishList(id) {
         return users().then((usersCollection)=>{
             return usersCollection.findOne({_id: id}).then((user)=>{
                 if(!user) throw "user not found";
                 let updateData = {wishList: user.wishList.push(movie)};
                 let updateCommand = {$set: updateData}
                 return usersCollection.updateOne({_id: id}, updateCommand).then(()=>{
+                    movies.updateWishingUsers(movie, id);
                     return this.getUserByDbId(id);
                 })
             })
@@ -178,6 +181,7 @@ let exportedMethods = {
                 let updateData = {wishList: newWishList};
                 let updateCommand = {$set: updateData}
                 return usersCollection.updateOne({_id: id}, updateCommand).then(()=>{
+                    movies.removeWishingUsers(movie, id);
                     return this.getUserByDbId(id);
                 })
             })

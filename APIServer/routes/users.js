@@ -158,3 +158,57 @@ router.post('/signup', async (req, res) => {
         res.json(message.data.message);
     })
 });
+
+router.post('/watchedList', async (req, res) => {
+    let info = req.body;
+    let response = await nrpSender.sendMessage({
+        
+        redis: redisConnection,
+        eventName: "watchedList-post",
+        data: {
+            
+            message: info
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("watchedList-from-back-user:request:*", (message, channel)=>{
+        
+        res.json(message.data.message);
+    })
+});
+
+router.post('/wishList/:id', async (req, res) => {
+    
+    let response = await nrpSender.sendMessage({
+        
+        redis: redisConnection,
+        eventName: "wishList-post",
+        data: {
+            
+            message: req.params.id
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("wishList-from-back-user:request:*", (message, channel)=>{
+        
+        res.json(message.data.message);
+    })
+});
+
+router.delete('/wishList/:id', async (req, res) => {
+    let info = req.body
+    let response = await nrpSender.sendMessage({
+        
+        redis: redisConnection,
+        eventName: "wishList-delete",
+        data: {
+            
+            message: info
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("wishListDelete-from-back-user:request:*", (message, channel)=>{
+        
+        res.json(message.data.message);
+    })
+});
