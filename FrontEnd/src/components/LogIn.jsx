@@ -12,7 +12,8 @@ class LogIn extends React.Component {
         super(props);
         this.state = {
             username:"",
-            password: ""
+            password: "",
+            message: ""
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -31,8 +32,9 @@ class LogIn extends React.Component {
 
     //waiting for the login api
     handleSubmit(event) {
-        // alert('Username: ' + this.state.username + '; Password: ' + this.state.password);
-        event.preventDefault();
+        event.preventDefault();        
+        alert(this.state.message);
+        window.location.pathname = "/";
     }
       
     render() {

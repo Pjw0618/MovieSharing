@@ -1,7 +1,7 @@
 (function($) {
   "use strict"; // Start of use strict
   
-  $("body").addClass(window.location.pathname.substring(1));
+  $("body").addClass(window.location.pathname.substring(1).split('/')[0]);
   
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {

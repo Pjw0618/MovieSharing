@@ -11,7 +11,8 @@ class Register extends React.Component {
             username:"",
             email: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            message: ""
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -30,8 +31,7 @@ class Register extends React.Component {
 
     //waiting for the register api
     handleSubmit(event) {
-        // alert('Username: ' + this.state.username + '; Password: ' + this.state.password + '; confirmPass:' + this.state.confirmPassword + "; email: "+this.state.email);
-        event.preventDefault();
+        alert(this.state.message);
     }
 
     render() {

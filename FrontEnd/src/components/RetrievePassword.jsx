@@ -26,8 +26,8 @@ class RetrievePass extends React.Component {
 
     //waiting for the register api
     handleSubmit(event) {
-        alert("email: " + this.state.email);
         event.preventDefault();
+        alert("An email has been sent to you, please check.");
     }
     render() {
         return (
