@@ -3,7 +3,6 @@ const users = mongoCollections.users;
 const uuid = require('node-uuid');
 const bcrypt = require("brcypt-nodejs");
 const movies = require('./movies');
-
 let exportedMethods = {
     getAllUsers() {
         return users().then((usersCollection) => {
@@ -30,7 +29,16 @@ let exportedMethods = {
             })
         })
     },
-    // used in app.js
+
+    getUserByUsername(username) {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ username: username }).then((user) => {
+                if (!user) throw "Can not find user";
+                return user;
+            })
+        })
+    },
+    // // used in app.js
     // getUserByIDPassport(id, cb) {
     //     return users().then((usersCollection) => {
     //         return usersCollection.findOne({ _id: id }).then((user) => {
@@ -52,8 +60,7 @@ let exportedMethods = {
         return users().then((usersCollection) => {
             let newUser = {
                 _id: uuid.v4(),
-                firstName: user.firstName,
-                lastName: user.lastName,
+                username: username,
                 email: user.email, //decodeURIComponent?
                 watchedList: user.watchedList,
                 wishList: user.wishList,
@@ -99,12 +106,10 @@ let exportedMethods = {
         }
         return users().then((usersCollection) => {
             let updateData = {};
-            if (updateU.firstName) {
-                updateData.firstName = updateU.firstName;
+            if (updateU.username) {
+                updateData.username = updateU.username;
             }
-            if (updateU.lastName) {
-                updateData.lastName = updateU.lastName;
-            }
+
             if (updateU._id) {
                 updateData._id = updateU._id;
             }
@@ -147,7 +152,7 @@ let exportedMethods = {
     },
 
     //updating wishing in movies
-    addToWishList(id, movie) {
+    addToWishList(id) {
         return users().then((usersCollection) => {
             return usersCollection.findOne({ _id: id }).then((user) => {
                 if (!user) throw "user not found";
@@ -161,7 +166,7 @@ let exportedMethods = {
         })
     },
 
-    // updating wishing in movies
+    //updating wishing in movies
     removeFromWishList(id, movie) {
         return users().then((usersCollection) => {
             return usersCollection.findOne({ _id: id }).then((user) => {

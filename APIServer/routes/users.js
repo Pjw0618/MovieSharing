@@ -16,7 +16,6 @@ router.get("/getAllUser", async (req, res) => {
         expectsResponse: false
     });
     redisConnection.on("getAllUser-from-back-user:request:*", (message, channel)=>{
-        
         res.json(message.data.message);
     })
     
