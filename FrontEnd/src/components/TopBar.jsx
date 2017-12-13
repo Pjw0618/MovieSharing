@@ -4,6 +4,17 @@ import { Link, IndexLink } from 'react-router-dom';
 import Searching from './Searching.jsx';
 import Category from './Categories.jsx';
 
+const Categories = [
+    "Horror",
+    "Animation",
+    "Comedy",
+    "Action",
+    "Drama",
+    "Western",
+    "Fiction",
+    "Romantic"
+]
+
 var loggedIn = true;//logged in or not
 var userName = "User Name";
 var curPage = window.location.pathname;
@@ -29,7 +40,7 @@ class TopBar extends React.Component {
             <nav className='navbar navbar-expand-lg navbar-light fixed-top' id="mainNav">
     		    <div className="container">
                     <Link className="navbar-brand js-scroll-trigger" to="/" onClick={window.location.reload}>Movist</Link>
-                    <Category />
+                    <Category categoryList={Categories}/>
                     <Button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </Button>

@@ -47,10 +47,6 @@ a:focus {
     font-family: roboto!important;
 }
 
-.comment-card{
-    background: url() center center no-repeat fixed;
-    
-}
 .movieDetail-card:after,
 .comment-card::after {
     width: 100%;
@@ -70,10 +66,16 @@ a:focus {
     width: 100%;
     margin-left: 150px;
 }
-.poster-kapsul {
+.movieDetailCard .poster-kapsul {
     text-align: center;
     position: absolute;
     margin-left: -280px;
+    opacity: 1;
+}
+.comments .poster-kapsul {
+    text-align: center;
+    position: absolute;
+    margin-left: 620px;
     opacity: 1;
 }
 .poster {

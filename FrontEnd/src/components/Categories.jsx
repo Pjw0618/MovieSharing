@@ -1,5 +1,4 @@
 import React from 'react';
-var CategoryList = [];// get all categories
 
 class Category extends React.Component {
     render() {
@@ -9,10 +8,9 @@ class Category extends React.Component {
                     <b className="caret"></b>
                 </a>
                 <ul role="menu" className="dropdown-menu text-center" aria-labelledby="drop1">
-                    <li role="presentation"><a href="#" role="menuitem">Category1</a></li>
-                    <li role="presentation"><a href="#" role="menuitem">Category2</a></li>
-                    <li role="presentation"><a href="#" role="menuitem">Category3</a></li>
-                    <li role="presentation"><a href="#" role="menuitem">Category4</a></li>
+                    {this.props.categoryList.map((x) => 
+                        <li role="presentation" key={x}><a href={`/MovieByCategory/`+x} role="menuitem">{x}</a></li>
+                    )}
                 </ul>
             </div>
         )

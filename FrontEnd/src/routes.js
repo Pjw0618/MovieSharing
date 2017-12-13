@@ -11,6 +11,7 @@ import UserAccount from './components/UserAccount.jsx';
 import LogIn from './components/LogIn.jsx';
 import UploadMovie from './components/UploadMovie.jsx';
 import MovieDetail from './components/MovieDetail';
+import MovieList from './components/MovieList';
 
 class Routes extends Component {
   render() {
@@ -22,6 +23,9 @@ class Routes extends Component {
             <Route path = { `/UserAccount` } component = { UserAccount }/>                           
             <Route path = { `/UploadMovie` } component = {UploadMovie} />
             <Route path = { `/MovieDetail/:movieId` } component = {MovieDetail} />
+            <Route path = { `/MovieByKey/:key` } component = {MovieList} />
+            <Route path = { `/MovieByCategory/:category` } component = {MovieList} />
+            <Route path = { `/MovieByCategory/:category/:key` } component = {MovieList} />            
           </Switch>
         </div>
     );
