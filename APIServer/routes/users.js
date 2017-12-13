@@ -3,6 +3,8 @@ const router = express.Router();
 const redis = require("redis");
 const redisConnection = require("../redis/redis-connection");
 const nrpSender = require("../redis/nrp-sender-shim")
+const jwt = require('jsonwebtoken');
+const jwtSecret = "a secret phrase!!"
 
 router.get("/getAllUser", async (req, res) => {
     let response = await nrpSender.sendMessage({
