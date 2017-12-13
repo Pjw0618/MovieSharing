@@ -476,3 +476,52 @@ redisConnection.on('user-delete:request:*', async (message, channel)=>{
     })
 });
 
+redisConnection.on('watchedList-post:request:*', async (message, channel)=>{
+    
+    let info = message.data.message;
+    await userdata.addToWatchedList(info.id, info.movie).then(async (list)=>{
+        let response = await nrpSender.sendMessage({
+            
+            redis: redisConnection,
+            eventName: "watchedList-from-back-user",
+            data: {
+                
+                message: await list
+            },
+            expectsResponse: false
+        });
+    })
+});
+redisConnection.on('wishList-post:request:*', async (message, channel)=>{
+    
+    let id= message.data.message;
+    await userdata.addToWishList(id).then(async (list)=>{
+        let response = await nrpSender.sendMessage({
+            
+            redis: redisConnection,
+            eventName: "wishList-from-back-user",
+            data: {
+                
+                message: await list
+            },
+            expectsResponse: false
+        });
+    })
+});
+
+redisConnection.on('wishList-delete:request:*', async (message, channel)=>{
+    
+    let info= message.data.message;
+    await userdata.removeFromWishList(info.id, info.movie).then(async (list)=>{
+        let response = await nrpSender.sendMessage({
+            
+            redis: redisConnection,
+            eventName: "wishListDelete-from-back-user",
+            data: {
+                
+                message: await list
+            },
+            expectsResponse: false
+        });
+    })
+});
