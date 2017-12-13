@@ -53,7 +53,7 @@ let exportedMethods = {
                 stars = movie.stars,
                 writers = movie.writers,
                 description = movie.description,
-                screenShots =[],
+                screenShots = movie.screenShots,
                 category = movie.category
             };
             newMovie.poster = im.processPoster(movie.poster, newMovie._id);
