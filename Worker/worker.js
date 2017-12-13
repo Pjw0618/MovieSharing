@@ -3,6 +3,7 @@ const data=require("./data");
 const sharedata=data.sharemessages;
 const commentdata = data.comments;
 const moviedata = data.movies;
+const userdata = data.users;
 const dbConnection = require("./config/mongoConnection");
 const redis = require("redis");
 const redisConnection = require("./redis/redis-connection");
@@ -219,3 +220,39 @@ redisConnection.on('sharemessage-delete:request:*', async (message, channel)=>{
         });
     })
 });
+
+//movie
+redisConnection.on('movie-post:request:*', async (message, channel)=>{
+    
+    let info = message.data.message;
+    await moviedata.addMovie(info).then(async (newadd)=>{
+        let response = await nrpSender.sendMessage({
+            
+            redis: redisConnection,
+            eventName: "post-from-back-movie",
+            data: {
+                
+                message: await newadd
+            },
+            expectsResponse: false
+        });
+    })
+});
+
+redisConnection.on('movie-getAllMovie:request:*', async (message, channel)=>{
+    
+    let info = message.data.message;
+    await moviedata.getAllMovies().then(async (allMovies)=>{
+        let response = await nrpSender.sendMessage({
+            
+            redis: redisConnection,
+            eventName: "getAllMovie-from-back-movie",
+            data: {
+                
+                message: await allMovies
+            },
+            expectsResponse: false
+        });
+    })
+});
+
