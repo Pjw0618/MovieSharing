@@ -10,16 +10,18 @@ import HomePage from "./components/HomePage.jsx";
 import UserAccount from './components/UserAccount.jsx';
 import LogIn from './components/LogIn.jsx';
 import UploadMovie from './components/UploadMovie.jsx';
+import MovieDetail from './components/MovieDetail';
 
 class Routes extends Component {
   render() {
     return (
         <div>
           <Switch >                
+            <Route exact path = { `/` } component = { HomePage }/> 
             <Route path = { `/Login` } component = { LogIn }/>
             <Route path = { `/UserAccount` } component = { UserAccount }/>                           
-            <Route path = {'/UploadMovie'} component = {UploadMovie} />
-            <Route exact path = { `/` } component = { HomePage }/> 
+            <Route path = { `/UploadMovie` } component = {UploadMovie} />
+            <Route path = { `/MovieDetail/:movieId` } component = {MovieDetail} />
           </Switch>
         </div>
     );

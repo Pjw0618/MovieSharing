@@ -4,7 +4,7 @@ import { Link, IndexLink } from 'react-router-dom';
 import Searching from './Searching.jsx';
 import Category from './Categories.jsx';
 
-var loggedIn = false;//logged in or not
+var loggedIn = true;//logged in or not
 var userName = "User Name";
 var curPage = window.location.pathname;
 var Top10;
