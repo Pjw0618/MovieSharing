@@ -14,6 +14,8 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const Strategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt-nodejs");
+const jwt = require('jsonwebtoken');
+const jwtSecret = "a secret phrase!!"
 
 app.use(bodyParser.json());
 app.use(flash());

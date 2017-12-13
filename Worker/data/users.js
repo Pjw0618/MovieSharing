@@ -28,6 +28,15 @@ let exportedMethods = {
             })
         })
         },
+
+        getUserByUsername(username) {
+            return users().then((usersCollection)=>{
+                return usersCollection.findOne({username: username}).then((user)=>{
+                    if(!user) throw "Can not find user";
+                    return user;
+                })
+            })
+            },
     // used in app.js
     getUserByIDPassport(id, cb){
         return users().then((usersCollection)=>{
@@ -50,8 +59,7 @@ let exportedMethods = {
             return users().then((usersCollection)=>{
                 let newUser = {
                     _id: uuid.v4(),
-                    firstName: user.firstName,
-                    lastName: user.lastName,
+                    username: username,
                     email: user.email, //decodeURIComponent?
                     watchedList: user.watchedList,
                     wishList: user.wishList,
@@ -97,12 +105,10 @@ let exportedMethods = {
         }
         return users().then((usersCollection)=>{
             let updateData = {};
-            if(updateU.firstName){
-                updateData.firstName = updateU.firstName;
+            if(updateU.username){
+                updateData.username = updateU.username;
             }
-            if(updateU.lastName){
-                updateData.lastName = updateU.lastName;
-            }
+           
             if(updateU._id){
                 updateData._id = updateU._id;
             }

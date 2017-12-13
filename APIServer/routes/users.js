@@ -11,7 +11,7 @@ router.get("/getAllUser", async (req, res) => {
         eventName: "user-getAllUser",
         data: {
             
-            message: req.params.id
+            message: "all users"
         },
         expectsResponse: false
     });
@@ -38,6 +38,42 @@ router.get("/getUserByDbId/:id", async (req, res) => {
     })
     
 });
+router.get("/getUserByEmail/:id", async (req, res) => {
+    let response = await nrpSender.sendMessage({
+        
+        redis: redisConnection,
+        eventName: "user-getUserByEmail",
+        data: {
+            
+            message: req.params.id
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("getUserByEmail-from-back-user:request:*", (message, channel)=>{
+        
+        res.json(message.data.message);
+    })
+    
+});
+
+router.get("/getUserByUsername/:id", async (req, res) => {
+    let response = await nrpSender.sendMessage({
+        
+        redis: redisConnection,
+        eventName: "user-getUserByUsername",
+        data: {
+            
+            message: req.params.id
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("getUserByUsername-from-back-user:request:*", (message, channel)=>{
+        
+        res.json(message.data.message);
+    })
+    
+});
+
 router.put("/:id", async (req, res) => {
     let response = await nrpSender.sendMessage({
         
@@ -72,15 +108,53 @@ router.delete("/:id", async (req, res) => {
     })
     
 });
+router.post('/authenticate', (req, res, next)=>{
+    let token = req.body.token;
+    return jwt.verify(token, jwtSecret, (err, decoded)=>{
+        if(err) {res.status(401).json({message: "error"})}
+        res.status(200).json({message: "valid token"});
+    })
+});
+
 //login
-router.post('/', passport.authenticate('local-login', {
-    successRedirect: '/user', // redirect to the secure profile section
-    failureRedirect: '/login', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-}));
+router.post('/login', (req, res, next) => {
+
+    console.log(req.body)
+
+    return passport.authenticate('login', (err, success, data) => {
+        
+        if (!success) {
+            return res.status(400).json({
+                success: false,
+                message: 'Could not process the form'
+            });
+        }
+        else {
+            console.log(data.token, "++++++++++", data.user)
+            return res.status(200).json({
+                success: true,
+                message: 'login succeed!',
+                token: data.token,
+                user: data.user
+            });
+        }
+    })(req, res, next);
+});
 //sign up
-router.post('/', passport.authenticate('local-signup', {
-    successRedirect: '/user/editprofile', // redirect to the secure profile section
-    failureRedirect: '/signup', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-}));
+router.post('/signup', async (req, res) => {
+    let info = req.body;
+    let response = await nrpSender.sendMessage({
+        
+        redis: redisConnection,
+        eventName: "user-post",
+        data: {
+            
+            message: info
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("post-from-back-user:request:*", (message, channel)=>{
+        
+        res.json(message.data.message);
+    })
+});
