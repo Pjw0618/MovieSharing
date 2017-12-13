@@ -53,7 +53,7 @@ let exportedMethods = {
                 stars = movie.stars,
                 writers = movie.writers,
                 description = movie.description,
-                screenShots =[],
+                screenShots = movie.screenShots,
                 category = movie.category
             };
             newMovie.poster = im.processPoster(movie.poster, newMovie._id);
@@ -174,10 +174,20 @@ let exportedMethods = {
         });
     },
 
-    updateWishingUsers() {
+    updateWishingUsers(movieId, userId) {
         return movies().then((movieCollection) => {
             return movieCollection.updateOne({ _id: movieId }, {
                 $addToSet: {
+                    wishingUsers: userId
+                }
+            });
+        });
+    },
+
+    removeWishingUsers(movieId, userId) {
+        return movies().then((movieCollection) => {
+            return movieCollection.updateOne({ _id: movieId }, {
+                $pull: {
                     wishingUsers: userId
                 }
             });

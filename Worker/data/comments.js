@@ -25,7 +25,7 @@ let exportedMethods = {
     },
 
 
-    getCommentsById(id) {
+    getCommentsByDbId(id) {
         //suppose comment and movie are seperate two tables
         return comments().then((commentsCollection) => {
             return commentsCollection.findOne({ _id: id }).then((comments) => {
@@ -51,7 +51,7 @@ let exportedMethods = {
             return commentsCollection.insertOne(newComment).then((newInsert) => {
                 return newInsert.insertedId;
             }).then((newId) => {
-                return this.getCommentsById(newId);
+                return this.getCommentsByDbId(newId);
             })
         })
     },
@@ -61,7 +61,7 @@ let exportedMethods = {
             return Promise.reject("Invalid id");
         }
         return comments().then((commentsCollection) => {
-            return this.getCommentsById(id).then((originComment) => {
+            return this.getCommentsByDbId(id).then((originComment) => {
                 return commentsCollection.removeOne({ _id: id }).then((deleteInfo) => {
                     if (deleteInfo.deletedCount === 0) {
                         throw (`Could not delete comment with id of ${id}`);
@@ -79,7 +79,7 @@ let exportedMethods = {
     // support partly updating
     updateComment(id, updatedContent, updatedRating, updatedDate) {
         return comments().then((commentsCollection) => {
-            return this.getCommentsById(id).then((originComment) => {
+            return this.getCommentsByDbId(id).then((originComment) => {
                 let updatedComment = {
                     userId: originComment.userId,
                     movieId: originComment.movieId,
@@ -90,7 +90,7 @@ let exportedMethods = {
                 }
                 movies.updateScore(originComment.movieId, updatedRating, originComment.score);
                 return commentsCollection.updateOne({ _id: id }, updatedComment).then(() => {
-                    return this.getCommentsById(id);
+                    return this.getCommentsByDbId(id);
                 })
             });
 
