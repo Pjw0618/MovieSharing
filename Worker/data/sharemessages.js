@@ -22,7 +22,7 @@ let exportedMethods = {
     },
         
        
-    getMessagesById(id) {
+    getMessagesByDbId(id) {
         
         return sharemessages().then((sharemessagesCollection)=>{
             return sharemessagesCollection.findOne({_id: id}).then(async (sharemessages)=>{
@@ -48,7 +48,7 @@ let exportedMethods = {
                 return newInsert.insertedId;
                 
             }).then((newId)=>{
-                return this.getMessagesById(newId);
+                return this.getMessagesByDbId(newId);
             })
         })
     },

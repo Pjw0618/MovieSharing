@@ -30,50 +30,79 @@ const bcrypt = require("bcrypt-nodejs");
 const LocalStrategy = require('passport-local').Strategy;
 const users = require("./data/users");
 
-module.exports = function(passport){
-// for persistent login
-passport.serializeUser(function(user, done) {
-    done(null, user._id);
-});
-passport.deserializeUser(function(id, done) {
-    users.getUserByIDPassport(id, function(err, user) {
-        done(err, user);
-    });
-});
-let validPassword = function(user, password){
-    return bcrypt.compareSync(password, user.saltedPassword);
-}
+
+
 //user() for stragtegies and configration
 passport.use('login', new Strategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 },
-    function(req, email, password, done){
+    function (req, username, password, done) {
         //email = decodeURIComponent(email)
-        users().getUserByEmailPassport(email, function(err, user){
-            if(err){
-                console.log("error");
-                return done(err);
-            }
+
+        let response = await nrpSender.sendMessage({
+            redis: redisConnection,
+            eventName: "user-getUserByUsername",
+            data: {
+                
+                message: username
+            },
+            expectsResponse: false
+        });
+        redisConnection.on("getUserByUsername-from-back-user:request:*", (message, channel)=>{
+            let user = message.data.message;
             //user not exist
-            if(!user){
+            if (!user) {
                 console.log('user not exist');
-                return done(null, false, req.flash('message','user not found'))
+                return done(null, false, req.flash('message', 'user not found'))
             }
             //user exist but wrong password
-            if(!validPassword(user, password)){
+            if (!validPassword(user, password)) {
                 console.log("invalid password");
-                return done(null, false, req.flash('message','invalid password'));
+                return done(null, false, req.flash('message', 'invalid password'));
             }
             return done(null, true, user);
         })
+        // users().getUserByEmail(email).then((user)=>{
+        //     //user not exist
+        //     if (!user) {
+        //         console.log('user not exist');
+        //         return done(null, false, req.flash('message', 'user not found'))
+        //     }
+        //     //user exist but wrong password
+        //     if (!validPassword(user, password)) {
+        //         console.log("invalid password");
+        //         return done(null, false, req.flash('message', 'invalid password'));
+        //     }
+        //     return done(null, true, user);
+        // })
     }
 
 ))
 
-}
+passport.serializeUser(function (user, done) {
+    done(null, user._id);
+});
+passport.deserializeUser(function (id, done) {
+    let response = await nrpSender.sendMessage({
+        redis: redisConnection,
+        eventName: "user-getUserByDbId",
+        data: {
+            
+            message: id
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("getUserByDbId-from-back-user:request:*", (message, channel)=>{
+        let user = message.data.message;
+        done(null, user);
+    })
+});
 
+let validPassword = function (user, password) {
+    return bcrypt.compareSync(password, user.saltedPassword);
+}
 
 configRoutes(app);
 
