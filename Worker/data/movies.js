@@ -174,10 +174,20 @@ let exportedMethods = {
         });
     },
 
-    updateWishingUsers() {
+    updateWishingUsers(movieId, userId) {
         return movies().then((movieCollection) => {
             return movieCollection.updateOne({ _id: movieId }, {
                 $addToSet: {
+                    wishingUsers: userId
+                }
+            });
+        });
+    },
+
+    removeWishingUsers(movieId, userId) {
+        return movies().then((movieCollection) => {
+            return movieCollection.updateOne({ _id: movieId }, {
+                $pull: {
                     wishingUsers: userId
                 }
             });
