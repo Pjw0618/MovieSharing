@@ -5,7 +5,7 @@ body.UploadMovie {
     font-family: roboto;
     display:flex; /* You delete it on your web page */
     justify-content:center;/* and this - delete */
-    background: url('https://static.pexels.com/photos/693651/pexels-photo-693651.jpeg') center center fixed;
+    background: url('https://static.pexels.com/photos/693651/pexels-photo-693651.jpeg') center center fixed repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -18,14 +18,15 @@ a:focus {
     color: #eee;
 }
 .uploadMovie-card {
-    width: 800px;
-    margin-top: 15%;
+    width: 900px;
+    height: 700px;
+    margin-top: 10%;
     background: white;
     opacity: 0.9;
     background-size: cover;
     -moz-background-size: cover;
     -ms-background-size: cover;
-    -wenkit-background-size: cover;
+    -webkit-background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     position: relative;
@@ -39,19 +40,13 @@ a:focus {
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;
+    /* align-items: center; */
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
     font-family: roboto!important;
 }
 .uploadMovie-card:after {
-    /* background: linear-gradient(-135deg, rgb(63, 81, 181), rgb(233, 30, 99)); */
-    /* Login Card Arkaplan Rengi */
-    
-    /* background: -webkit-linear-gradient(-135deg, rgb(63, 81, 181), rgb(233, 30, 99)); */
-    /* Login Card Arkaplan Rengi */
-    
     width: 100%;
     height: 100%;
     position: absolute;
@@ -64,13 +59,15 @@ a:focus {
 .uploadMovie-card > form {
     z-index: 4;
     position: relative;
-    padding: 0px 25px;
+    padding: 60px 25px;
     width: 100%;
+    margin-left: 150px;
 }
 .share-gif-kapsul {
     text-align: center;
-    position: relative;
-    opacity: 0.8;
+    position: absolute;
+    margin-left: -280px;
+    opacity: 1;
 }
 .share-gif {
     /* height: auto; */
@@ -78,14 +75,13 @@ a:focus {
     border-radius: 50%;
     padding: 50px 0px;
 }
-/* form başlangıç stiller ------------------------------- */
 
 .upload-group {
     position: relative;
     margin-bottom: 45px;
     display: inline-block;
 }
-.upload-group input {
+.upload-group input, textarea {
     font-size: 18px;
     padding: 10px 10px 10px 10px;
     display: block;
@@ -95,7 +91,7 @@ a:focus {
     background: none;
     color: black;
 }
-.upload-group input:focus {
+.upload-group input, textarea:focus {
     outline: none;
 }
 /* LABEL ======================================= */
@@ -114,11 +110,18 @@ a:focus {
 }
 /* active durum */
 
-.upload-group input:focus ~ label,
-input:valid ~ label {
+.upload-group input:valid ~ label,
+textarea:valid ~ label {
+    top: -20px;
+    font-size: 18px;
+    color: rgba(6, 30, 75, 0.7);
+}
+
+.upload-group input:not(.inputfile):focus ~ label,
+textarea:focus ~ label {
     top: -20px;
     font-size: 14px;
-    color: rgba(6, 30, 75, 0.7);
+    color: plum;
 }
 /* BOTTOM BARS ================================= */
 
@@ -226,41 +229,20 @@ input:valid ~ label {
     padding: 10px;
     border-radius: 3px;
     outline: none;
-    opacity: 0.8;
-    width: 100%;
+    opacity: 1;
+    width: 200px;
     border-style: none;
 }
-.forgot-and-create {
-    margin: 20px 0px;
-}
-.forgot-and-create a {
-    color: #bbb;
-    /* font-size: 12px; */
-    text-decoration: none;
-    font-weight: 100;
-    margin-right: 10px;
-}
 
-.login-link, .register-link, .retrieve-link {
-    color: #bbb;
-    font-size: 15px;
-    padding: 20px 0px;
-    text-decoration: none;
-    display: block;
-}
-
-.login-link:hover, .register-link:hover, .retrieve-link:hover {
-    color: white;
-}
-
-.inputfile {
+/* .inputfile {
 	width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
-    overflow: hidden;
-    position: relative;
-    z-index: -1;
-}
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+} */
+
 .inputfile label {
     text-transform: uppercase;
 }
@@ -272,4 +254,12 @@ input:valid ~ label {
   
   #result div{
     display: inline;
+  }
+
+  #showForm {
+    display: block;
+  }
+
+  #hideForm {
+    display: none;
   }

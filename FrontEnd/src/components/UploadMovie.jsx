@@ -13,8 +13,11 @@ class UploadMovie extends React.Component {
             starring: "",
             screenplay: "",
             description: "",
+            poster: "",
             screenshot: "",
-            screenshots: []
+            screenshots: [],
+            displayForm: "showForm",
+            displayCongrats: "hideForm"
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -43,77 +46,94 @@ class UploadMovie extends React.Component {
     }
     //waiting for the login api
     handleSubmit(event) {
-
+        // alert(this.state.movieName);
         event.preventDefault();
+        this.setState({displayCongrats: "showForm"});
+        this.setState({displayForm: "hideForm"});
     }
 
     render(){
         return (
-            <div className="uploadMovie-card">
+            <div>
                 <TopBar />
-                
-                <form id="uploadMovie-form" className="col-lg-12" onSubmit={this.handleSubmit}>
-                    <div className="col-lg-12 share-gif-kapsul">
-                            <img width="100" className="share-gif" src="https://media.giphy.com/media/3o7rc0qU6m5hneMsuc/giphy.gif" alt="Logo" />
-                    </div>
+                <div className="uploadMovie-card">
+                    <form onSubmit={this.handleSubmit} className="uploadMovieForm">
+                        <div className="share-gif-kapsul">
+                            <img className="share-gif" src="https://media.giphy.com/media/3o7rc0qU6m5hneMsuc/giphy.gif" alt="Logo" />
+                            <input className="giris-yap-buton" type="submit" value="SUBMIT" id={this.state.displayForm} />
+                            <a className="giris-yap-buton" href="../UploadMovie" id={this.state.displayCongrats}>ADD ONE MORE</a>
+                        </div>
+                        
+                        <div id={this.state.displayForm} className="col-lg-12">
+                            <div className="upload-group">
+                                <input name="movieName" type="text" value={this.state.movieName} onChange={this.handleInput} required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">theaters</i><span className="span-input">Movie Name</span></label>
+                            </div>
 
-                    <div className="upload-group">
-                        <input name="movieName" type="text" value={this.state.movieName} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">theaters</i><span className="span-input">Movie Name</span></label>
-                    </div>
+                            <div className="upload-group">
+                                <input name="category" type="text" value={this.state.category} onChange={this.handleInput} required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">view_list</i><span className="span-input">Category</span></label>
+                            </div>
 
-                    <div className="upload-group">
-                        <input name="category" type="text" value={this.state.category} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">view_list</i><span className="span-input">Category</span></label>
-                    </div>
+                            <div className="upload-group">
+                                <input name="releaseYear" type="text" value={this.state.releaseYear} onChange={this.handleInput} required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">date_range</i><span className="span-input">Release Year</span></label>
+                            </div><br/>
 
-                    <div className="upload-group">
-                        <input name="releaseYear" type="text" value={this.state.releaseYear} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">date_range</i><span className="span-input">Release Year</span></label>
-                    </div>
+                            <div className="upload-group">
+                                <input name="directors" type="text" value={this.state.directors} onChange={this.handleInput} required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">videocam</i><span className="span-input">Directed By</span></label>
+                            </div>
+                        
+                            <div className="upload-group">
+                                <input name="starring" type="text" value={this.state.starring} onChange={this.handleInput} required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon"><i className="material-icons">movie_filter</i></i><span className="span-input">Starring</span></label>
+                            </div>
 
-                    <div className="upload-group">
-                        <input name="directors" type="text" value={this.state.directors} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">videocam</i><span className="span-input">Directed By</span></label>
-                    </div>
-                    <br/>
+                            <div className="upload-group">
+                                <input name="screenplay" type="text" value={this.state.screenplay} onChange={this.handleInput} required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">assignment</i><span className="span-input">Screenplay By</span></label>
+                            </div>
+                            <br/>
 
-                    <div className="upload-group">
-                        <input name="starring" type="text" value={this.state.starring} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon"><i className="material-icons">movie_filter</i></i><span className="span-input">Starring</span></label>
-                    </div>
+                            <div className="upload-group">
+                                <textarea name="description" value={this.state.description} onChange={this.handleInput} cols="50" required />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">description</i><span className="span-input">Brief Description</span></label>
+                            </div>
+                            <br/>
 
-                    <div className="upload-group">
-                        <input name="screenplay" type="text" value={this.state.screenplay} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">assignment</i><span className="span-input">Screenplay By</span></label>
-                    </div>
-                    <br/>
+                            <div className="upload-group">
+                                <input type="file" name="poster" id="poster" className="poster" value={this.state.poster} onChange={this.handleInput} />
+                                <label id="posterLabel" htmlFor="poster"><i className="material-icons input-ikon">file_upload</i><span className="span-input">Add poster</span></label>
+                            </div>
 
-                    <div className="upload-group">
-                        <input name="description" type="text" value={this.state.description} onChange={this.handleInput} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label><i className="material-icons input-ikon">description</i><span className="span-input">Brief Description</span></label>
-                    </div>
-                    <br/>
-                    <input type="file" name="screenshot" id="files" className="inputfile" value={this.state.screenshot} onChange={this.addScreenshots} multiple="multiple" />
-                    <label htmlFor="files"><i className="material-icons input-ikon">file_upload</i><span className="span-input">Add screenshot</span></label>
-                    <output id="result" />
+                            <div className="upload-group">
+                                <input type="file" name="screenshot" id="files" className="inputfile" value={this.state.screenshot} onChange={this.addScreenshots} multiple="multiple" />
+                                <label id="screenshotLabel" htmlFor="screenshot"><i className="material-icons input-ikon">file_upload</i><span className="span-input">Add screenshot</span></label>
+                            </div>
+                            <output id="result" />
+                        </div>
 
-                    <input type="submit" value="Submit" />
-                </form>
+                        {/* submit successfully */}
+                        <div id={this.state.displayCongrats} className="col-lg-12">
+                            <h2>SUCCESSFULL!</h2>
+                        </div>
+                    </form>
+                </div>
             </div>
         )
     }
