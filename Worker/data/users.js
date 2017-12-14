@@ -62,21 +62,17 @@ let exportedMethods = {
                 _id: uuid.v4(),
                 username: user.username,
                 email: user.email, //decodeURIComponent?
-
-                saltedPassword: user.saltedPassword,
+                watchedList: [],
+                wishList: [],
+                saltedPassword: bcrypt.hashSync(user.password),
             }
-            return usersCollection.findOne({ email: user.email }).then((u) => {
-                if (u) throw "Email already exists";
+            return usersCollection.findOne({ username: user.username }).then((u) => {
+                if (u) throw "username already exists";
                 else {
-                    return usersCollection.findOne({ _id: user._id }).then((u) => {
-                        if (u) throw "userId already exists"
-                        else {
-                            return usersCollection.insertOne(newUser).then((result) => {
-                                return result.insertedId;
-                            }).then((newId) => {
-                                return this.getUserByDbId(newId);
-                            })
-                        }
+                    return usersCollection.insertOne(newUser).then((result) => {
+                        return result.insertedId;
+                    }).then((newId) => {
+                        return this.getUserByDbId(newId);
                     })
                 }
             })
@@ -116,7 +112,7 @@ let exportedMethods = {
                 updateData.email = updateU.email;
             }
             if (updateU.saltedPassword) {
-                updateData.saltedPassword = updateU.saltedPassword;
+                updateData.saltedPassword = bcrypt.hashSync(updateU.password);
             }
             // if (updateU.watchedList) {
             //     updateData.watchedList = updateU.watchedList;
@@ -152,7 +148,7 @@ let exportedMethods = {
                 $addToSet: {
                     watchedList: movieId
                 }
-            }).then((result)=>{
+            }).then((result) => {
                 return this.getUserByDbId(id);
             });
         })
@@ -175,7 +171,7 @@ let exportedMethods = {
                 $addToSet: {
                     wishList: movieId
                 }
-            }).then((result)=>{
+            }).then((result) => {
                 return this.getUserByDbId(id);
             });
         })
@@ -205,7 +201,7 @@ let exportedMethods = {
                 $pull: {
                     wishList: movieId
                 }
-            }).then((result)=>{
+            }).then((result) => {
                 return this.getUserByDbId(id);
             });
         })

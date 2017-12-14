@@ -3,8 +3,14 @@ const router = express.Router();
 const redis = require("redis");
 const redisConnection = require("../redis/redis-connection");
 const nrpSender = require("../redis/nrp-sender-shim")
-router.post("/", async (req, res) => {
+const multer = require('multer');
+const upload = multer({ dest: "./uploads" });
+
+router.post("/", upload.single('poster'), async (req, res) => {
     let info = req.body;
+    console.log(req.file)
+    info.poster = "../APIServer/" + req.file.path;
+
     let response = await nrpSender.sendMessage({
 
         redis: redisConnection,
@@ -149,15 +155,21 @@ router.get("/searchInCategory/:category/:keyword", async (req, res) => {
 
 });
 
-router.post("/screenshot", async (req, res) => {
-    let info = req.body;
+router.post("/screenshot/:movieId", upload.array('screenshot'), async (req, res) => {
+    let movieId = req.params.movieId;
+    let screenshots = [];
+    if (req.files) {
+        req.files.forEach((file) => {
+            screenshots.push("../APIServer/" + file.path);
+        })
+    }
     let response = await nrpSender.sendMessage({
 
         redis: redisConnection,
         eventName: "movie-postScreenshot",
         data: {
 
-            message: info
+            message: { movieId: movieId, screenshots: screenshots }
         },
         expectsResponse: false
     });
