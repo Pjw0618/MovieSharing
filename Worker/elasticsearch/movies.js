@@ -1,5 +1,16 @@
 const client = require("../config/elasticsearch");
 
+// client.indices.create({
+//     index: 'moviesharing'
+// }, function (err, resp, status) {
+//     if (err) {
+//         console.log(err);
+//     }
+//     else {
+//         console.log("create ES index moviesharing", resp);
+//     }
+// });
+
 let exportedMethods = {
     //this function also allow update when given id already exists
     addMovie(id, movie) {
