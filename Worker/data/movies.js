@@ -60,7 +60,7 @@ let exportedMethods = {
             return movieCollection.findOne({
                 name: movie.name
             }).then((movie) => {
-                if (book) {
+                if (movie) {
                     throw "This movie already exists!";
                 } else {
                     return movieCollection.insertOne(newMovie).then((insertInfo) => {
@@ -139,8 +139,11 @@ let exportedMethods = {
         return es.searchByCategory(category).then((results) => {
             let movies = [];
             if (results) {
-                results.forEach((result) => {
-                    movies.push(this.getMovieById(result._id));
+                results.forEach(async (result) => {
+                    this.getMovieById(result._id).then((movie) => {
+                        console.log(movie);
+                        movies.push(movie);
+                    });
                 })
             }
             return movies;
@@ -160,11 +163,15 @@ let exportedMethods = {
         })
     },
 
-    addScreenshotToMovie(movieId, pictureUrl) {
+    addScreenshotToMovie(movieId, screenShots) {
         return movies().then((movieCollection) => {
+            let screens = [];
+            screenShots.forEach((screen) => {
+                screens.push(im.precessScreen(screen));
+            })
             return movieCollection.updateOne({ _id: movieId }, {
                 $addToSet: {
-                    screenShots: pictureUrl
+                    screenShots: screens
                 }
             });
         });
