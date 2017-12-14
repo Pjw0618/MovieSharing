@@ -160,7 +160,7 @@ router.post("/screenshot/:movieId", upload.array('screenshot'), async (req, res)
     let screenshots = [];
     if (req.files) {
         req.files.forEach((file) => {
-            screenshots.push("../APIServer/" + file.path);
+            screenshots.push("../APIServer/"+file.path);
         })
     }
     let response = await nrpSender.sendMessage({

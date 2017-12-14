@@ -147,7 +147,6 @@ let exportedMethods = {
                 })
             }
             return movies;
-            
         })
     },
 
