@@ -1,4 +1,7 @@
 import React from 'react';
+import Request from 'superagent';
+// var FormData = require('form-data');
+import fetch from 'isomorphic-fetch';
 
 var clear = {
     clear: 'both'
@@ -12,7 +15,6 @@ class Register extends React.Component {
             email: "",
             password: "",
             confirmPassword: "",
-            message: ""
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -31,7 +33,33 @@ class Register extends React.Component {
 
     //waiting for the register api
     handleSubmit(event) {
-        alert(this.state.message);
+        event.preventDefault();
+        alert("submit");
+        // var data = new FormData();
+        // console.log(this.state.username);
+        // console.log(this.state.password)
+        // console.log(this.state.email)
+        // data.append('username', this.state.username);
+        // data.append('password', this.state.password);
+        // data.append('email', this.state.email);
+        // Request.post("http://localhost:3001/user/signup")
+
+        // .send(data).then((response) => {
+        //     console.log(response);
+        // })
+        fetch('http://localhost:3001/user/signup', {
+            method: 'POST',
+            mode: "no-cors",
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+              }),
+            body: JSON.stringify(this.state)
+          }).then(function(res) {
+              return res.json();
+          }).then(function(json) {
+              alert(json);
+          });
     }
 
     render() {

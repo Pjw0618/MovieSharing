@@ -46,7 +46,6 @@ class UploadMovie extends React.Component {
     }
     //waiting for the login api
     handleSubmit(event) {
-        // alert(this.state.movieName);
         event.preventDefault();
         this.setState({displayCongrats: "showForm"});
         this.setState({displayForm: "hideForm"});

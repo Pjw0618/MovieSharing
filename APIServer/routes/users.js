@@ -146,6 +146,8 @@ router.post('/login', (req, res, next) => {
 });
 //sign up
 router.post('/signup', async (req, res) => {
+    // console.log(req)
+    console.log(req.body);
     let info = req.body;
     let response = await nrpSender.sendMessage({
 
