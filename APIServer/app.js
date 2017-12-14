@@ -43,7 +43,7 @@ app.use(passport.session());
 
 //user() for stragtegies and configration
 passport.use('login', new Strategy({
-    usernameField: 'email',
+    usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true
 },
@@ -61,6 +61,8 @@ passport.use('login', new Strategy({
         });
         redisConnection.on("getUserByUsername-from-back-user:request:*", (message, channel)=>{
             let user = message.data.message;
+            console.log(user)
+            console.log(password)
             //user not exist
             if (!user) {
                 console.log('user not exist');
