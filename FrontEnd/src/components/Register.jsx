@@ -1,6 +1,4 @@
 import React from 'react';
-import Request from 'superagent';
-// var FormData = require('form-data');
 import fetch from 'isomorphic-fetch';
 
 var clear = {
@@ -25,41 +23,31 @@ class Register extends React.Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
+        
         this.setState({
             [name]: value
         });
     }
 
-    //waiting for the register api
     handleSubmit(event) {
-        event.preventDefault();
-        alert("submit");
-        // var data = new FormData();
-        // console.log(this.state.username);
-        // console.log(this.state.password)
-        // console.log(this.state.email)
-        // data.append('username', this.state.username);
-        // data.append('password', this.state.password);
-        // data.append('email', this.state.email);
-        // Request.post("http://localhost:3001/user/signup")
-
-        // .send(data).then((response) => {
-        //     console.log(response);
-        // })
-        fetch('http://localhost:3001/user/signup', {
-            method: 'POST',
-            mode: "no-cors",
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Cache-Control': 'no-cache'
-              }),
-            body: JSON.stringify(this.state)
-          }).then(function(res) {
-              return res.json();
-          }).then(function(json) {
-              alert(json);
-          });
+        if(this.state.confirmPassword != this.state.password) {
+            alert("Confirm password doesn't match");
+            event.preventDefault();
+        }
+        else {
+            fetch('http://localhost:3001/user/signup', {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache'
+                  }),
+                body: JSON.stringify(this.state)
+              }).then(function(res) {
+                  return res.json();
+              }).then(function(json) {
+                  alert("Register successfully");
+            });
+        }
     }
 
     render() {
