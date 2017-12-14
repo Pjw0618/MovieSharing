@@ -324,14 +324,31 @@ redisConnection.on('movie-searchKeyword:request:*', async (message, channel)=>{
     })
 });
 
-redisConnection.on('movie-searchCategory:request:*', async (message, channel)=>{
+redisConnection.on('movie-searchByCategory:request:*', async (message, channel)=>{
     
     let category = message.data.message;
-    await moviedata.searchInMovie(category).then(async (search)=>{
+    await moviedata.searchByCategory(category).then(async (search)=>{
         let response = await nrpSender.sendMessage({
             
             redis: redisConnection,
-            eventName: "searchCategory-from-back-movie",
+            eventName: "searchByCategory-from-back-movie",
+            data: {
+                
+                message: await search
+            },
+            expectsResponse: false
+        });
+    })
+});
+
+redisConnection.on('movie-searchInCategory:request:*', async (message, channel)=>{
+    
+    let info = message.data.message;
+    await moviedata.searchInCategory(info.category, info.keyword).then(async (search)=>{
+        let response = await nrpSender.sendMessage({
+            
+            redis: redisConnection,
+            eventName: "searchInCategory-from-back-movie",
             data: {
                 
                 message: await search
@@ -362,7 +379,7 @@ redisConnection.on('movie-postScreenshot:request:*', async (message, channel)=>{
 redisConnection.on('user-post:request:*', async (message, channel)=>{
     
     let info = message.data.message;
-    await userdata.addUser(user) .then(async (newadd)=>{
+    await userdata.addUser(info) .then(async (newadd)=>{
         let response = await nrpSender.sendMessage({
             
             redis: redisConnection,
@@ -427,7 +444,7 @@ redisConnection.on('user-getUserByEmail:request:*', async (message, channel)=>{
 
 redisConnection.on('user-getUserByUsername:request:*', async (message, channel)=>{
     
-    let email = message.data.message;
+    let username = message.data.message;
     await userdata.getUserByUsername(username).then(async (user)=>{
         let response = await nrpSender.sendMessage({
             
@@ -445,7 +462,7 @@ redisConnection.on('user-getUserByUsername:request:*', async (message, channel)=
 redisConnection.on('user-put:request:*', async (message, channel)=>{
     
     let info = message.data.message;
-    await userdata.updateUser(info.id, info.updateU).then(async (user)=>{
+    await userdata.updateUser(info.id, info.update).then(async (user)=>{
         let response = await nrpSender.sendMessage({
             
             redis: redisConnection,
@@ -494,8 +511,8 @@ redisConnection.on('watchedList-post:request:*', async (message, channel)=>{
 });
 redisConnection.on('wishList-post:request:*', async (message, channel)=>{
     
-    let id= message.data.message;
-    await userdata.addToWishList(id).then(async (list)=>{
+    let info = message.data.message;    
+    await userdata.addToWishList(info.id, info.movie).then(async (list)=>{
         let response = await nrpSender.sendMessage({
             
             redis: redisConnection,
