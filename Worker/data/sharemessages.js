@@ -4,20 +4,20 @@ const uuid = require('node-uuid');
 let exportedMethods = {
     getMessagesBySenderId(SenderId) {
         return sharemessages().then((sharemessagesCollection)=>{
-            return sharemessagesCollection.findOne({senderId: SenderId}).then((sharemessages)=>{
-                if(sharemessages === null){return "sharemessages not found by SenderId"}
-                else{return sharemessages}
-            })
+            return sharemessagesCollection.find({senderId: SenderId}).toArray();
+                // if(sharemessages === null){return "sharemessages not found by SenderId"}
+                // else{return sharemessages}
+                
         })
     },
         
        
     getMessagesByReceiverId(ReceiverId) {
         return sharemessages().then((sharemessagesCollection)=>{
-            return sharemessagesCollection.findOne({receiverId: ReceiverId}).then((sharemessages)=>{
-                if(sharemessages === null){return "sharemessages not found by ReceiverId"}
-                else{return sharemessages}
-            })
+            return sharemessagesCollection.find({receiverId: ReceiverId}).toArray();
+                // if(sharemessages === null){return "sharemessages not found by ReceiverId"}
+                // else{return sharemessages}
+                
         })
     },
         
@@ -26,9 +26,9 @@ let exportedMethods = {
         
         return sharemessages().then((sharemessagesCollection)=>{
             return sharemessagesCollection.findOne({_id: id}).then(async (sharemessages)=>{
-                
-                if(sharemessages === null){return "sharemessages not found"}
-                else{return await sharemessages}
+                // if(sharemessages === null){return "sharemessages not found"}
+                // else{return await sharemessages}
+                return sharemessages;
             })
         })
     },

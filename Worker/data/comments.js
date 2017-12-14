@@ -6,21 +6,20 @@ const movies = require('./movies');
 let exportedMethods = {
     getCommentsByUserId(id) {
         return comments().then((commentsCollection) => {
-            return commentsCollection.findOne({ userId: id }).then((comments) => {
-
-                if (comments === null) { return "comments not found for userId"; }
-                else { return comments }
-            })
+            return commentsCollection.find({ userId: id }).toArray();
+                // if (comments === null) { return "comments not found for userId"; }
+                // else { return comments }
+               
         })
     },
 
 
     getCommentsByMovieId(movieId) {
         return comments().then((commentsCollection) => {
-            return commentsCollection.findOne({ movieId: movieId }).then((comments) => {
-                if (comments === null) { return "comments not found for movieId" }
-                else { return comments }
-            })
+            return commentsCollection.find({ movieId: movieId }).toArray();
+                // if (comments === null) { return "comments not found for movieId" }
+                // else { return comments }
+                
         })
     },
 
@@ -28,9 +27,10 @@ let exportedMethods = {
     getCommentsByDbId(id) {
         //suppose comment and movie are seperate two tables
         return comments().then((commentsCollection) => {
-            return commentsCollection.findOne({ _id: id }).then((comments) => {
-                if (comments === null) { return "comments not found" }
-                else { return comments }
+            return commentsCollection.findOne({ _id: id }).then((comment) => {
+                // if (comments === null) { return "comments not found" }
+                // else { return comments }
+                return comment;
             })
         })
     },
