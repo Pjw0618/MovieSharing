@@ -361,7 +361,7 @@ redisConnection.on('movie-searchInCategory:request:*', async (message, channel)=
 redisConnection.on('movie-postScreenshot:request:*', async (message, channel)=>{
     
     let info = message.data.message;
-    await moviedata.addScreenshotToMovie(info.movieId, info.pictureUrl).then(async (shot)=>{
+    await moviedata.addScreenshotToMovie(info.movieId, info.screenshots).then(async (shot)=>{
         let response = await nrpSender.sendMessage({
             
             redis: redisConnection,
