@@ -269,10 +269,10 @@ let exportedMethods = {
                 }
                 let updateInfo = {
                     score: newScore,
+                    commentNum: movie.commentNum - 1
                 };
                 let updateCommand = {
                     $set: updateInfo,
-                    commentNum: movie.commentNum - 1
                 };
                 return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
                     return this.getMovieById(movieId);
