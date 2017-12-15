@@ -49,7 +49,7 @@ class LogIn extends React.Component {
           })
           .then((message) =>  {
             if (message.success == true) {
-                console.log(message.message)
+                console.log(message);
               localStorage.setItem('successMessage', message.message);
               localStorage.setItem('userinfo', message.user);
     

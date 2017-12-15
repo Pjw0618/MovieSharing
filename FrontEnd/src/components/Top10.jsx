@@ -47,7 +47,6 @@ class Top10 extends React.Component {
                             </a>
                         </div>
                     )}
-                    {/* {Top10Body} */}
                     </div>
                 </div>
             </section>
