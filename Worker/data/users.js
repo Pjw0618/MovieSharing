@@ -67,7 +67,7 @@ let exportedMethods = {
                 saltedPassword: bcrypt.hashSync(user.password),
             }
             return usersCollection.findOne({ username: user.username }).then((u) => {
-                if (u) throw "username already exists";
+                if (u) return false;
                 else {
                     return usersCollection.insertOne(newUser).then((result) => {
                         return result.insertedId;
