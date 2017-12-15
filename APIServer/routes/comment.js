@@ -73,13 +73,13 @@ router.get("/getDbId/:id", async (req, res) => {
     })
 });
 
-router.put("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
     let response = await nrpSender.sendMessage({
         
         redis: redisConnection,
         eventName: "comment-put",
         data: {
-            
+            id: req.params.id,
             message: req.body
         },
         expectsResponse: false
