@@ -273,6 +273,7 @@ let exportedMethods = {
                 };
                 let updateCommand = {
                     $set: updateInfo,
+                    
                 };
                 return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
                     return this.getMovieById(movieId);
