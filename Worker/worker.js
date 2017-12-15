@@ -13,12 +13,17 @@ const client = require("./config/elasticsearch");
 dbConnection().then((db) => {
     return db.dropDatabase()
 })
-client.delete({
+client.deleteByQuery({
     index: 'moviesharing',
-    type: 'movie'
-}, function (error, response) {
+    type: 'movie',
+    body: {
+        query: {
+            match_all: {}
+        }
+      }
+  }, function (error, response) {
     console.log("ES deleted!")
-});
+  });
 //comment
 redisConnection.on('comment-post:request:*', async (message, channel) => {
 

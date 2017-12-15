@@ -111,7 +111,7 @@ let exportedMethods = {
             if (updateU.email) {
                 updateData.email = updateU.email;
             }
-            if (updateU.saltedPassword) {
+            if (updateU.password) {
                 updateData.saltedPassword = bcrypt.hashSync(updateU.password);
             }
             // if (updateU.watchedList) {

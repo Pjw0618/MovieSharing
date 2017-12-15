@@ -116,8 +116,8 @@ router.delete("/:id", async (req, res) => {
 router.post('/authenticate', (req, res, next) => {
     let token = req.body.token;
     return jwt.verify(token, jwtSecret, (err, decoded) => {
-        if (err) { res.status(401).json({ message: "error" }) }
-        res.status(200).json({ message: "valid token" });
+        if (err) { res.status(401).json({ success: false, message: "error" }) }
+        res.status(200).json({ success: true, message: "valid token" });
     })
 });
 
