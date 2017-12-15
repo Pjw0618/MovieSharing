@@ -56,7 +56,7 @@ let exportedMethods = {
                 screenShots: movie.screenShots,
                 category: movie.category
             };
-            // newMovie.poster = im.processPoster(movie.poster, newMovie._id);
+            newMovie.poster = im.processPoster(movie.poster, newMovie._id);
             return movieCollection.findOne({
                 name: movie.name
             }).then((movie) => {
@@ -124,45 +124,45 @@ let exportedMethods = {
     // search given keyword in all movie
     searchInMovie(keyword) {
         return es.searchInMovie(keyword).then((results) => {
-            let movies = [];
+            let promises = []
             if (results) {
                 results.forEach((result) => {
-                    movies.push(this.getMovieById(result._id));
+                    promises.push(this.getMovieById(result._id));
                 })
             }
-            return movies;
+            return Promise.all(promises).then((values)=>{
+                return values;
+            })
         })
     },
 
     // search for given category
     searchByCategory(category) {
-        let movies = [];
         return es.searchByCategory(category).then((results) => {
-            
+            let promises = []
             if (results) {
-               results.forEach((result) => {
-                    
-               this.getMovieById(result._id).then((movie) => {
-                        console.log(movie);
-                        movies.push(movie);
-                    });
+                results.forEach((result) => {
+                    promises.push(this.getMovieById(result._id));
                 })
-                
             }
-            return movies;
+            return Promise.all(promises).then((values)=>{
+                return values;
+            })
         })
     },
 
     // search for keyword in given category
     searchInCategory(category, keyword) {
-        return es.searchInCategory(category, keyword).then((results) => {
-            let movies = [];
+        return es.searchInCategory(category, keyword).then(async (results) => {
+            let promises = []
             if (results) {
                 results.forEach((result) => {
-                    movies.push(this.getMovieById(result._id));
+                    promises.push(this.getMovieById(result._id));
                 })
             }
-            return movies;
+            return Promise.all(promises).then((values)=>{
+                return values;
+            })
         })
     },
 
@@ -213,7 +213,7 @@ let exportedMethods = {
     //call it when add new comment
     addScore(movieId, score) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(movieId).then((movie) => {
+            return this.getMovieById(id).then((movie) => {
                 let newScore;
                 if (!movie.score || movie.commentNum === 0) {
                     newScore = score;
@@ -237,7 +237,7 @@ let exportedMethods = {
     //call it when update comment
     updateScore(movieId, newScore, oldScore) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(movieId).then((movie) => {
+            return this.getMovieById(id).then((movie) => {
                 let score;
                 if (!movie.score || movie.commentNum === 0) {
                     score = newScore;
@@ -260,7 +260,7 @@ let exportedMethods = {
     //call it when delete comment
     removeScore(movieId, score) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(movieId).then((movie) => {
+            return this.getMovieById(id).then((movie) => {
                 let newScore;
                 if (movie.commentNum === 1) {
                     newScore = undefined;
@@ -272,8 +272,7 @@ let exportedMethods = {
                     commentNum: movie.commentNum - 1
                 };
                 let updateCommand = {
-                    $set: updateInfo
-                    
+                    $set: updateInfo,
                 };
                 return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
                     return this.getMovieById(movieId);
