@@ -64,14 +64,14 @@ let exportedMethods = {
         return client.search({
             index: 'moviesharing',
             type: 'movie',
-            q: keyword,
             body: {
                 query: {
                     match: {
                         category: category
                     }
                 }
-            }
+            },
+            q: keyword
         }).then((response) => {
             const data = response.hits.hits;
             return data;

@@ -135,7 +135,7 @@ let exportedMethods = {
                     promises.push(this.getMovieById(result._id));
                 })
             }
-            return Promise.all(promises).then((values)=>{
+            return Promise.all(promises).then((values) => {
                 return values;
             })
         })
@@ -150,7 +150,7 @@ let exportedMethods = {
                     promises.push(this.getMovieById(result._id));
                 })
             }
-            return Promise.all(promises).then((values)=>{
+            return Promise.all(promises).then((values) => {
                 return values;
             })
         })
@@ -165,7 +165,7 @@ let exportedMethods = {
                     promises.push(this.getMovieById(result._id));
                 })
             }
-            return Promise.all(promises).then((values)=>{
+            return Promise.all(promises).then((values) => {
                 return values;
             })
         })
@@ -177,11 +177,19 @@ let exportedMethods = {
             screenShots.forEach((screen) => {
                 screens.push(im.precessScreen(screen));
             })
-            return movieCollection.updateOne({ _id: movieId }, {
-                $addToSet: {
-                    screenShots: screens
-                }
+            return movies().then((movieCollection) => {
+                return movieCollection.findOne({ _id: movieId }).then((movie) => {
+                    movie.screenShots.forEach((screen) => {
+                        screens.push(screen);
+                    });
+                    return movieCollection.updateOne({ _id: movieId }, {
+                        $addToSet: {
+                            screenShots: screens
+                        }
+                    });
+                })
             });
+
         });
     },
 
@@ -218,7 +226,7 @@ let exportedMethods = {
     //call it when add new comment
     addScore(movieId, score) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(id).then((movie) => {
+            return this.getMovieById(movieId).then((movie) => {
                 let newScore;
                 if (!movie.score || movie.commentNum === 0) {
                     newScore = score;
@@ -242,7 +250,7 @@ let exportedMethods = {
     //call it when update comment
     updateScore(movieId, newScore, oldScore) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(id).then((movie) => {
+            return this.getMovieById(movieId).then((movie) => {
                 let score;
                 if (!movie.score || movie.commentNum === 0) {
                     score = newScore;
@@ -265,7 +273,7 @@ let exportedMethods = {
     //call it when delete comment
     removeScore(movieId, score) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(id).then((movie) => {
+            return this.getMovieById(movieId).then((movie) => {
                 let newScore;
                 if (movie.commentNum === 1) {
                     newScore = undefined;
