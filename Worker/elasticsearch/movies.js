@@ -1,7 +1,7 @@
 const client = require("../config/elasticsearch");
 
-//  client.indices.create({
-//      index: 'moviesharing'
+// client.indices.create({
+//     index: 'moviesharing'
 // }, function (err, resp, status) {
 //     if (err) {
 //         console.log(err);

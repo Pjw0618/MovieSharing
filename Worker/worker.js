@@ -82,10 +82,11 @@ redisConnection.on('comment-getDbId:request:*', async (message, channel)=>{
 });
 
 redisConnection.on('comment-put:request:*', async (message, channel)=>{
-    console.log("redis");
-    console.log(message.data.message);
-    let info = message.data.message
-    await commentdata.updateComment(info._id, info.content, info.rating, info.date).then(async (commentInfo)=>{
+    console.log("redis-put");
+    
+    let id = message.data.id;
+    let info = message.data.message;
+    await commentdata.updateComment(id, info.content, info.rating, info.date).then(async (commentInfo)=>{
         let response = await nrpSender.sendMessage({
             
             redis: redisConnection,

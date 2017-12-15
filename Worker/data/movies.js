@@ -56,7 +56,7 @@ let exportedMethods = {
                 screenShots: movie.screenShots,
                 category: movie.category
             };
-            newMovie.poster = im.processPoster(movie.poster, newMovie._id);
+            // newMovie.poster = im.processPoster(movie.poster, newMovie._id);
             return movieCollection.findOne({
                 name: movie.name
             }).then((movie) => {
@@ -136,15 +136,18 @@ let exportedMethods = {
 
     // search for given category
     searchByCategory(category) {
+        let movies = [];
         return es.searchByCategory(category).then((results) => {
-            let movies = [];
+            
             if (results) {
-                results.forEach(async (result) => {
-                    this.getMovieById(result._id).then((movie) => {
+               results.forEach((result) => {
+                    
+               this.getMovieById(result._id).then((movie) => {
                         console.log(movie);
                         movies.push(movie);
                     });
                 })
+                
             }
             return movies;
         })
@@ -210,7 +213,7 @@ let exportedMethods = {
     //call it when add new comment
     addScore(movieId, score) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(id).then((movie) => {
+            return this.getMovieById(movieId).then((movie) => {
                 let newScore;
                 if (!movie.score || movie.commentNum === 0) {
                     newScore = score;
@@ -234,7 +237,7 @@ let exportedMethods = {
     //call it when update comment
     updateScore(movieId, newScore, oldScore) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(id).then((movie) => {
+            return this.getMovieById(movieId).then((movie) => {
                 let score;
                 if (!movie.score || movie.commentNum === 0) {
                     score = newScore;
@@ -257,7 +260,7 @@ let exportedMethods = {
     //call it when delete comment
     removeScore(movieId, score) {
         return movies().then((movieCollection) => {
-            return this.getMovieById(id).then((movie) => {
+            return this.getMovieById(movieId).then((movie) => {
                 let newScore;
                 if (movie.commentNum === 1) {
                     newScore = undefined;
@@ -266,10 +269,11 @@ let exportedMethods = {
                 }
                 let updateInfo = {
                     score: newScore,
+                    commentNum: movie.commentNum - 1
                 };
                 let updateCommand = {
-                    $set: updateInfo,
-                    commentNum: movie.commentNum - 1
+                    $set: updateInfo
+                    
                 };
                 return movieCollection.updateOne({ _id: movieId }, updateCommand).then((result) => {
                     return this.getMovieById(movieId);
