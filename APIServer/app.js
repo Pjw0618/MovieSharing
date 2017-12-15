@@ -28,7 +28,13 @@ app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: fals
 // session.
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', req.get('Access-Control-Request-Headers'));
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    req.get('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    next();
+});
 
 
 
@@ -65,7 +71,12 @@ passport.use('login', new Strategy({
                 console.log("invalid password");
                 return done(null, false, req.flash('message', 'invalid password'));
             }
-            return done(null, true, user);
+            req.session.user = user;
+            const data = {
+                token: jwt.sign(user._id, jwtSecret),
+                user: user
+            }
+            return done(null, true, data);
         })
         // users().getUserByEmail(email).then((user)=>{
         //     //user not exist

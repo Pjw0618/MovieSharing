@@ -8,7 +8,7 @@ const upload = multer({ dest: "./uploads" });
 
 router.post("/", upload.single('poster'), async (req, res) => {
     let info = req.body;
-    console.log(req.file)
+    // console.log(req.file)
     info.poster = "../APIServer/" + req.file.path;
 
     let response = await nrpSender.sendMessage({
@@ -160,7 +160,7 @@ router.post("/screenshot/:movieId", upload.array('screenshot'), async (req, res)
     let screenshots = [];
     if (req.files) {
         req.files.forEach((file) => {
-            screenshots.push("../APIServer/"+file.path);
+            screenshots.push("../APIServer/" + file.path);
         })
     }
     let response = await nrpSender.sendMessage({
