@@ -71,7 +71,12 @@ passport.use('login', new Strategy({
                 console.log("invalid password");
                 return done(null, false, req.flash('message', 'invalid password'));
             }
-            return done(null, true, user);
+            req.session.user = user;
+            const data = {
+                token: jwt.sign(user._id, jwtSecret),
+                user: user
+            }
+            return done(null, true, data);
         })
         // users().getUserByEmail(email).then((user)=>{
         //     //user not exist
