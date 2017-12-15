@@ -20,14 +20,22 @@ class ViewComment extends React.Component {
         };
     }
 
-    // componentDidMount() {
-    //     fetch('/movie/getMovieById/?id=' + this.state.movieId)
-    //     .then(results => {
-    //         return results.json();
-    //     }).then(data => {
-    //         alert(data.results);
-    //     })
-    // }
+    async componentDidMount() {
+        fetch('http://localhost:3001/comment/getmovieId/' + this.state.movieId)
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .then((message) => {
+            console.log(message);
+            this.setState({
+                comments: message
+            })
+        })
+    }
 
     render() {
         return (

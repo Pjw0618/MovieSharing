@@ -58,7 +58,6 @@ class UploadMovie extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         
-
         var uploadMovie = new FormData();
         uploadMovie.append('name', this.state.movieName);
         uploadMovie.append('year', this.state.releaseYear);
@@ -72,7 +71,6 @@ class UploadMovie extends React.Component {
         request.post('http://localhost:3001/movie/')
         .send(uploadMovie)
         .end((err, resp) =>{
-            console.log(resp.body.success);
             if (resp.body.success == false) 
             { 
               console.log("internal error:");
@@ -80,7 +78,6 @@ class UploadMovie extends React.Component {
               console.error(resp.body.message);
             }
             else{
-              console.log(resp.body.message);
               this.setState({displayCongrats: "showForm"});
               this.setState({displayForm: "hideForm"});
             }
