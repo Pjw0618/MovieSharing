@@ -1,4 +1,6 @@
 import React from 'react';
+import fetch from 'isomorphic-fetch';
+import request from 'superagent';
 import '../style/css/AddComment.css';
 
 class AddComment extends React.Component {
@@ -7,7 +9,9 @@ class AddComment extends React.Component {
         this.state = {
             movie: this.props.movie,
             rating: "",
-            content: ""
+            content: "",
+            userId: localStorage.getItem("userInfo"),
+            
         };
 
         this.handleInput = this.handleInput.bind(this);
@@ -24,7 +28,10 @@ class AddComment extends React.Component {
     }
 
     handleSubmit(event) {
-        // event.preventDefault();
+        request.post('http://localhost:3001/comment')
+        .send({
+            
+        })
     }
 
     render() {
