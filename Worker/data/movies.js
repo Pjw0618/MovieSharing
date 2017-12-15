@@ -53,15 +53,20 @@ let exportedMethods = {
                 stars: movie.stars,
                 writers: movie.writers,
                 description: movie.description,
-                screenShots: movie.screenShots,
                 category: movie.category
             };
             newMovie.poster = im.processPoster(movie.poster, newMovie._id);
+            newMovie.screenShots = [];
+            console.log(movie.screenShots)
+            movie.screenShots.forEach((screen) => {
+                console.log(screen)
+                newMovie.screenShots.push(im.precessScreen(screen));
+            })
             return movieCollection.findOne({
                 name: movie.name
             }).then((movie) => {
                 if (movie) {
-                    throw "This movie already exists!";
+                    return false;
                 } else {
                     return movieCollection.insertOne(newMovie).then((insertInfo) => {
                         return insertInfo.insertedId;

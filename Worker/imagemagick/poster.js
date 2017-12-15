@@ -5,7 +5,7 @@ const uuid = require('node-uuid');
 
 let exportedMethods = {
     processPoster(url, id) {
-        console.log(url)
+        // console.log(url)
         const desPath = "../FrontEnd/public/processedposters/";
         var optionsObj = {
             srcPath: url,
@@ -28,13 +28,15 @@ let exportedMethods = {
     },
 
     precessScreen(url) {
+        // console.log(url)
         const desPath = "../FrontEnd/public/processedscreens/";
         const id = uuid.v4();
         var optionsObj = {
             srcPath: url,
             dstPath: desPath + id + ".png",
             quality: 1.0,
-            format: 'png',
+            height: "450",
+            format: 'png'
         };
         im.resize(optionsObj, function (err, stdout) {
             if (err) throw "convert screen failed";
