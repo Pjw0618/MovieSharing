@@ -21,6 +21,14 @@ const redis = require("redis");
 const redisConnection = require("./redis/redis-connection");
 const nrpSender = require("./redis/nrp-sender-shim")
 
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', req.get('Access-Control-Request-Headers'));
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    req.get('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    next();
+});
+
 app.use(bodyParser.json());
 app.use(flash());
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));

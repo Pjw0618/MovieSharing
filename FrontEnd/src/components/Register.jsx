@@ -1,4 +1,5 @@
 import React from 'react';
+import fetch from 'isomorphic-fetch';
 
 var clear = {
     clear: 'both'
@@ -12,7 +13,6 @@ class Register extends React.Component {
             email: "",
             password: "",
             confirmPassword: "",
-            message: ""
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -23,15 +23,31 @@ class Register extends React.Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
+        
         this.setState({
             [name]: value
         });
     }
 
-    //waiting for the register api
     handleSubmit(event) {
-        alert(this.state.message);
+        if(this.state.confirmPassword != this.state.password) {
+            alert("Confirm password doesn't match");
+            event.preventDefault();
+        }
+        else {
+            fetch('http://localhost:3001/user/signup', {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache'
+                  }),
+                body: JSON.stringify(this.state)
+              }).then(function(res) {
+                  return res.json();
+              }).then(function(json) {
+                  alert("Register successfully");
+            });
+        }
     }
 
     render() {

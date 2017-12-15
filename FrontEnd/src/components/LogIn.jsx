@@ -2,6 +2,8 @@ import React from 'react';
 import Register from './Register.jsx';
 import RetrievePass from './RetrievePassword.jsx';
 import TopBar from './TopBar.jsx';
+import Auth from '../module/Auth';
+import fetch from 'isomorphic-fetch';
 import '../style/css/Login.css';
 var clear = {
     clear: 'both'
@@ -13,7 +15,6 @@ class LogIn extends React.Component {
         this.state = {
             username:"",
             password: "",
-            message: ""
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -33,8 +34,37 @@ class LogIn extends React.Component {
     //waiting for the login api
     handleSubmit(event) {
         event.preventDefault();        
-        alert(this.state.message);
-        window.location.pathname = "/";
+        fetch('http://localhost:3001/user/login', {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+              }),
+            body: JSON.stringify(this.state)
+          }).then((response) => {
+            console.log(response);
+            return (response.json());
+          }).catch((e)=>{
+            console.log(e);
+          })
+          .then((message) =>  {
+            if (message.success == true) {
+                console.log(message.message)
+              localStorage.setItem('successMessage', message.message);
+              localStorage.setItem('userinfo', message.user);
+    
+              Auth.authenticateUser(message.token);
+              
+            //   Router.browserHistory.push('/user');
+
+            } 
+            else {
+            //   self.setState({ errors: message.message + ": email or password is incorrect" });
+            }
+    
+          })
+          
+        // window.location.pathname = "/";
     }
       
     render() {

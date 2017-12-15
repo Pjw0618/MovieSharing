@@ -48,7 +48,7 @@ router.get("/getAllMovie", async (req, res) => {
         expectsResponse: false
     });
     redisConnection.on("getAllMovie-from-back-movie:request:*", (message, channel) => {
-
+        
         res.json(message.data.message);
     })
 
