@@ -3,6 +3,7 @@ import { Button, ButtonToolbar, FormGroup, Form} from 'react-bootstrap';
 import { Link, IndexLink } from 'react-router-dom';
 import Searching from './Searching.jsx';
 import Category from './Categories.jsx';
+import Auth from '../module/Auth';
 
 const Categories = [
     "Horror",
@@ -15,10 +16,9 @@ const Categories = [
     "Romantic"
 ]
 
-var loggedIn = true;//logged in or not
-var userName = "User Name";
+var loggedIn = Auth.isUserAuthenticated();//logged in or not
+var userName = localStorage.getItem("userinfo").name;
 var curPage = window.location.pathname;
-var Top10;
 var userAccount;
 
 if(loggedIn) {

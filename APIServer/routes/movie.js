@@ -8,6 +8,7 @@ const upload = multer({ dest: "./uploads" });
 
 router.post("/", upload.single('poster'), async (req, res) => {
     let info = req.body;
+    console.log(req.body);
     console.log(req.file)
     info.poster = "../APIServer/" + req.file.path;
 
@@ -40,7 +41,7 @@ router.get("/getAllMovie", async (req, res) => {
         expectsResponse: false
     });
     redisConnection.on("getAllMovie-from-back-movie:request:*", (message, channel) => {
-
+        
         res.json(message.data.message);
     })
 

@@ -135,7 +135,7 @@ router.post('/login', (req, res, next) => {
             });
         }
         else {
-            // console.log(data.token, "++++++++++", data.user)
+            console.log(data.token, "++++++++++", data.user)
             return res.status(200).json({
                 success: true,
                 message: 'login succeed!',
@@ -147,6 +147,8 @@ router.post('/login', (req, res, next) => {
 });
 //sign up
 router.post('/signup', async (req, res) => {
+    // console.log(req)
+    console.log(req.body);
     let info = req.body;
     let response = await nrpSender.sendMessage({
 
