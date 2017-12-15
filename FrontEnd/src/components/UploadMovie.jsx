@@ -58,7 +58,6 @@ class UploadMovie extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         
-
         var uploadMovie = new FormData();
         uploadMovie.append('name', this.state.movieName);
         uploadMovie.append('year', this.state.releaseYear);

@@ -50,21 +50,13 @@ class LogIn extends React.Component {
           .then((message) =>  {
             if (message.success == true) {
                 console.log(message);
-              localStorage.setItem('successMessage', message.message);
-              localStorage.setItem('userinfo', message.user);
-    
-              Auth.authenticateUser(message.token);
-              
-            //   Router.browserHistory.push('/user');
-
+                localStorage.setItem('successMessage', message.message);
+                localStorage.setItem('username', message.user.username);
+                localStorage.setItem('userid', message.user._id);
+                Auth.authenticateUser(message.token);
             } 
-            else {
-            //   self.setState({ errors: message.message + ": email or password is incorrect" });
-            }
-    
           })
-          
-        // window.location.pathname = "/";
+        window.location.pathname = "/";
     }
       
     render() {

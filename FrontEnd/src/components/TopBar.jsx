@@ -4,6 +4,7 @@ import { Link, IndexLink } from 'react-router-dom';
 import Searching from './Searching.jsx';
 import Category from './Categories.jsx';
 import Auth from '../module/Auth';
+import { WSAEINVALIDPROVIDER } from 'constants';
 
 const Categories = [
     "Horror",
@@ -17,24 +18,29 @@ const Categories = [
 ]
 
 var loggedIn = Auth.isUserAuthenticated();//logged in or not
-var userName = localStorage.getItem("userinfo").name;
 var curPage = window.location.pathname;
-var userAccount;
-
-if(loggedIn) {
-    userAccount = 
-    <li className="nav-item">
-        <Link className="nav-link js-scroll-trigger" to="/UserAccount">{userName}</Link>
-    </li>
-}
-else {
-    userAccount = 
-    <li className="nav-item">
-        <Link className="nav-link js-scroll-trigger" to="/Login" onClick={window.location.reload}>Log In</Link>
-    </li>
-}
 
 class TopBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: localStorage.getItem("username"),
+            userAccount: 
+            Auth.isUserAuthenticated()?
+            (<li className="nav-item">
+            <Link className="nav-link js-scroll-trigger" to={`/UserAccount/`+localStorage.getItem('userid')}>{localStorage.getItem("username")}</Link>
+            </li>) :
+            (<li className="nav-item">
+            <Link className="nav-link js-scroll-trigger" to="/Login" onClick={window.location.reload}>Log In</Link>
+            </li>)
+        };
+    }
+
+    handleLogout(event) {
+        Auth.deauthenticateUser();
+        window.location.reload;
+    }
+
     render() {
         return (
             <nav className='navbar navbar-expand-lg navbar-light fixed-top' id="mainNav">
@@ -48,9 +54,9 @@ class TopBar extends React.Component {
                     <ul className="navbar-nav ml-auto">
                         <Searching />
                         <li className="nav-item">
-                            <Link className="nav-link js-scroll-trigger" to="#Top10" onClick={window.location.reload}>Week's Top Ten</Link>
+                            <Link className="nav-link js-scroll-trigger" to="#Top10" onClick={window.location.reload}>Top Ten</Link>
                         </li>         
-                        {userAccount}
+                        {this.state.userAccount}
                     </ul>
                     </div>
                 </div>

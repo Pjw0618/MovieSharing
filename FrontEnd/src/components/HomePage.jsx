@@ -8,6 +8,14 @@ import GitHubRepo from './GitHubRepo.jsx';
 import '../style/css/creative.min.css';
 
 class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: localStorage.getItem("userinfo")
+        };
+
+        console.log(this.state.user)
+    }
     render() {
         return (
             <div>

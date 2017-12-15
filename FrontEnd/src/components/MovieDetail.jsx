@@ -28,11 +28,8 @@ class MovieDetail extends React.Component {
         };
     }
 
-    componentDidMount() {
+    async componentWillMount() {
         var movieId = window.location.pathname.split('/')[2];
-        this.setState({
-            movieId: movieId
-        })
         fetch("http://localhost:3001/movie/getMovieById/" + movieId)
         .then((response) => {
             console.log(response);
@@ -44,6 +41,7 @@ class MovieDetail extends React.Component {
         .then((message) => {
             console.log(message);
             this.setState({
+                movieId: movieId,
                 movie: {
                     category: message.category,
                     commentNum: message.commentNum,
