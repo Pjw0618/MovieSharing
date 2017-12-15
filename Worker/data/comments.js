@@ -7,9 +7,9 @@ let exportedMethods = {
     getCommentsByUserId(id) {
         return comments().then((commentsCollection) => {
             return commentsCollection.find({ userId: id }).toArray();
-                // if (comments === null) { return "comments not found for userId"; }
-                // else { return comments }
-               
+            // if (comments === null) { return "comments not found for userId"; }
+            // else { return comments }
+
         })
     },
 
@@ -17,9 +17,9 @@ let exportedMethods = {
     getCommentsByMovieId(movieId) {
         return comments().then((commentsCollection) => {
             return commentsCollection.find({ movieId: movieId }).toArray();
-                // if (comments === null) { return "comments not found for movieId" }
-                // else { return comments }
-                
+            // if (comments === null) { return "comments not found for movieId" }
+            // else { return comments }
+
         })
     },
 
@@ -71,7 +71,7 @@ let exportedMethods = {
                     }
                 });
             })
-            
+
         })
     },
 
@@ -79,22 +79,17 @@ let exportedMethods = {
     // support partly updating
     updateComment(id, updatedContent, updatedRating, updatedDate) {
         return comments().then((commentsCollection) => {
-            return this.getCommentsByDbId(id).then((originComment) => {
-                let updatedComment = {
-                    userId: originComment.userId,
-                    movieId: originComment.movieId,
-                    username: originComment.username,
-                    content: updatedContent,
-                    rating: updatedRating,
-                    date: updatedDate
-                }
-                movies.updateScore(originComment.movieId, updatedRating, originComment.score);
-                return commentsCollection.updateOne({ _id: id }, updatedComment).then(() => {
-                    return this.getCommentsByDbId(id);
-                })
-            });
-
-
+            let updateInfo = {
+                content: updatedContent,
+                rating: updatedRating,
+                date: updatedDate
+            }
+            let updateCommand = {
+                $set: updateInfo
+            };
+            return commentsCollection.updateOne({ _id: id }, updateCommand).then(() => {
+                return this.getCommentsByDbId(id);
+            })
         })
     }
 }
