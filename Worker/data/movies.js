@@ -182,11 +182,14 @@ let exportedMethods = {
                     movie.screenShots.forEach((screen) => {
                         screens.push(screen);
                     });
+
                     return movieCollection.updateOne({ _id: movieId }, {
-                        $addToSet: {
+                        $set: {
                             screenShots: screens
                         }
-                    });
+                    }).then((result) => {
+                        return this.getMovieById(movieId);
+                    })
                 })
             });
 
