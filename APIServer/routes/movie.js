@@ -12,7 +12,7 @@ router.post("/", upload.array('poster'), async (req, res) => {
     if (req.files) {
         info.poster = "../APIServer/" + req.files[0].path;
         info.screenShots = [];
-        for(let i = 1; i < req.files.length; i++){
+        for (let i = 1; i < req.files.length; i++) {
             info.screenShots.push("../APIServer/" + req.files[i].path);
         }
     }
@@ -90,14 +90,16 @@ router.get("/getMovieById/:id", async (req, res) => {
 
 });
 
-router.put("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
+    let info = req.body;
+    info._id = req.params.id;
     let response = await nrpSender.sendMessage({
 
         redis: redisConnection,
         eventName: "movie-put",
         data: {
 
-            message: req.body
+            message: info
         },
         expectsResponse: false
     });

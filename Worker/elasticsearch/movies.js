@@ -66,12 +66,21 @@ let exportedMethods = {
             type: 'movie',
             body: {
                 query: {
-                    match: {
-                        category: category
+                    bool: {
+                        must: [{
+                            match: {
+                                category: category
+                            },
+                        },
+                        {
+                            multi_match: {
+                                query: keyword,
+                                fields: ["name", "year", "directors","stars","writers","description"]
+                            }
+                        }]
                     }
                 }
             },
-            q: keyword
         }).then((response) => {
             const data = response.hits.hits;
             return data;
