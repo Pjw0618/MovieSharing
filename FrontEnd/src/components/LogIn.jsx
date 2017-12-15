@@ -54,9 +54,9 @@ class LogIn extends React.Component {
                 localStorage.setItem('username', message.user.username);
                 localStorage.setItem('userid', message.user._id);
                 Auth.authenticateUser(message.token);
+                window.location.pathname = "/";
             } 
           })
-        window.location.pathname = "/";
     }
       
     render() {

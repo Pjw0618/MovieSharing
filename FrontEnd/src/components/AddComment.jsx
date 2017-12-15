@@ -20,7 +20,7 @@ class AddComment extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async componentWillMount() {
+    componentDidMount() {
         var movieId = window.location.pathname.split('/')[2];
         fetch("http://localhost:3001/movie/getMovieById/" + movieId)
         .then((response) => {
@@ -41,7 +41,7 @@ class AddComment extends React.Component {
                     directors: message.directors.split(','),
                     name: message.name,
                     poster: message.poster,
-                    rating: message.score,
+                    rating: message.score? message.score: "",
                     screenshots: message.screenShots,
                     starring: message.stars.split(','),
                     watchedUsers: message.watchedUsers,
@@ -65,18 +65,23 @@ class AddComment extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        var AddComment = new FormData();
+        // var AddComment = new FormData();
         var dt = new Date();
 
-        AddComment.append('userId', this.state.userid);
-        AddComment.append('movieId', this.state.movieId);
-        AddComment.append('username', this.state.username);
-        AddComment.append('content', this.state.content);
-        AddComment.append('rating', this.state.rating);
-        AddComment.append('date', dt.toLocaleDateString());
-
-        console.log(this.state.movie);
-
+        // AddComment.append('userId', this.state.userid);
+        // AddComment.append('movieId', this.state.movieId);
+        // AddComment.append('username', this.state.username);
+        // AddComment.append('content', this.state.content);
+        // AddComment.append('rating', this.state.rating);
+        // AddComment.append('date', dt.toLocaleDateString());
+        var AddComment = {
+            'userId': this.state.userid,
+            'movieId': this.state.movieId,
+            'username': this.state.username,
+            'content': this.state.content,
+            'rating': this.state.rating,
+            'date': dt.toLocaleDateString()
+        }
         request.post('http://localhost:3001/comment/')
         .send(AddComment)
         .end((err, resp) =>{
@@ -104,7 +109,7 @@ class AddComment extends React.Component {
                     <div className="modal-body">
                         <div className="row">
                             <div className="col-md-6 product_img">
-                                <img src={this.state.movie.poster} className="img-responsive"/>
+                                <img src={`../processedposters/`+this.state.movie.poster} className="img-responsive"/>
                             </div>
                             <div className="col-md-6 product_content">
                                 <h4><span>{this.state.movie.name}</span></h4>

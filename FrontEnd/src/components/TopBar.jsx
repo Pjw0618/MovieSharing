@@ -29,16 +29,19 @@ class TopBar extends React.Component {
             Auth.isUserAuthenticated()?
             (<li className="nav-item">
             <Link className="nav-link js-scroll-trigger" to={`/UserAccount/`+localStorage.getItem('userid')}>{localStorage.getItem("username")}</Link>
+            <Link className="nav-link js-scroll-trigger" to="/" onClick={this.handleLogout}>Log Out</Link>            
             </li>) :
             (<li className="nav-item">
             <Link className="nav-link js-scroll-trigger" to="/Login" onClick={window.location.reload}>Log In</Link>
             </li>)
         };
+
+        this.handleLogout = this.handleLogout.bind(this);        
     }
 
     handleLogout(event) {
         Auth.deauthenticateUser();
-        window.location.reload;
+        window.location.reload();
     }
 
     render() {
