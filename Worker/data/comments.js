@@ -47,7 +47,7 @@ let exportedMethods = {
                 rating: rating,
                 date: date
             };
-            movies.addScore(movieId, comment.rating);
+            movies.addScore(movieId, rating);
             return commentsCollection.insertOne(newComment).then((newInsert) => {
                 return newInsert.insertedId;
             }).then((newId) => {

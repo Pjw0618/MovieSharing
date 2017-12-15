@@ -6,11 +6,18 @@ const nrpSender = require("../redis/nrp-sender-shim")
 const multer = require('multer');
 const upload = multer({ dest: "./uploads" });
 
-router.post("/", upload.single('poster'), async (req, res) => {
+router.post("/", upload.array('poster'), async (req, res) => {
     let info = req.body;
-    console.log(req.body);
-    console.log(req.file)
-    info.poster = "../APIServer/" + req.file.path;
+    console.log(req.files)
+    if (req.files) {
+        info.poster = "../APIServer/" + req.files[0].path;
+        info.screenShots = [];
+        for(let i = 1; i < req.files.length; i++){
+            info.screenShots.push("../APIServer/" + req.files[i].path);
+        }
+    }
+    console.log(info.screenShots)
+    // info.poster = "../APIServer/" + req.file.path;3
 
     let response = await nrpSender.sendMessage({
 
@@ -161,7 +168,7 @@ router.post("/screenshot/:movieId", upload.array('screenshot'), async (req, res)
     let screenshots = [];
     if (req.files) {
         req.files.forEach((file) => {
-            screenshots.push("../APIServer/"+file.path);
+            screenshots.push("../APIServer/" + file.path);
         })
     }
     let response = await nrpSender.sendMessage({
