@@ -135,7 +135,7 @@ router.post('/login', (req, res, next) => {
             });
         }
         else {
-            // console.log(data.token, "++++++++++", data.user)
+            console.log(data.token, "++++++++++", data.user)
             return res.status(200).json({
                 success: true,
                 message: 'login succeed!',

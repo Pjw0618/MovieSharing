@@ -1,6 +1,9 @@
 import React from 'react';
 import TopBar from './TopBar';
+import fetch from 'isomorphic-fetch';
+import request from 'superagent';
 import '../style/css/UploadMovie.css';
+var FormData = require('form-data');
 
 class UploadMovie extends React.Component {
     constructor(props) {
@@ -23,6 +26,7 @@ class UploadMovie extends React.Component {
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addScreenshots = this.addScreenshots.bind(this);
+        this.addPoster = this.addPoster.bind(this);
     }
 
     handleInput(event) {
@@ -35,6 +39,12 @@ class UploadMovie extends React.Component {
         });
     }
     
+    addPoster(event) {
+        this.setState({
+            poster: event.target.files[0]
+        })
+    }
+
     addScreenshots(event){
         const target = event.target;
         const value = target.value;
@@ -44,11 +54,37 @@ class UploadMovie extends React.Component {
 
         this.setState({screenshots:newScreenshots});
     }
-    //waiting for the login api
+
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({displayCongrats: "showForm"});
-        this.setState({displayForm: "hideForm"});
+        
+
+        var uploadMovie = new FormData();
+        uploadMovie.append('name', this.state.movieName);
+        uploadMovie.append('year', this.state.releaseYear);
+        uploadMovie.append('directors', this.state.directors.split(','));
+        uploadMovie.append('stars', this.state.starring.split(','));
+        uploadMovie.append('writers', this.state.screenplay.split(','));
+        uploadMovie.append('description', this.state.description);
+        uploadMovie.append('category', this.state.category);
+        uploadMovie.append('poster', this.state.poster);
+
+        request.post('http://localhost:3001/movie/')
+        .send(uploadMovie)
+        .end((err, resp) =>{
+            console.log(resp.body.success);
+            if (resp.body.success == false) 
+            { 
+              console.log("internal error:");
+              console.error(err);
+              console.error(resp.body.message);
+            }
+            else{
+              console.log(resp.body.message);
+              this.setState({displayCongrats: "showForm"});
+              this.setState({displayForm: "hideForm"});
+            }
+        });
     }
 
     render(){
@@ -116,7 +152,7 @@ class UploadMovie extends React.Component {
                             <br/>
 
                             <div className="upload-group">
-                                <input type="file" name="poster" id="poster" className="poster" value={this.state.poster} onChange={this.handleInput} />
+                                <input type="file" name="poster" id="poster" className="poster" onChange={this.addPoster} />
                                 <label id="posterLabel" htmlFor="poster"><i className="material-icons input-ikon">file_upload</i><span className="span-input">Add poster</span></label>
                             </div>
 
