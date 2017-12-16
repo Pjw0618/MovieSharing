@@ -51,20 +51,18 @@ let exportedMethods = {
             return commentsCollection.insertOne(newComment).then((newInsert) => {
                 return newInsert.insertedId;
             }).then((newId) => {
+                console.log("added a comment!");
                 return this.getCommentsByDbId(newId);
             })
         })
     },
     // update averagePoint in movies
     removeComment(id) {
-        if (!id) {
-            return Promise.reject("Invalid id");
-        }
         return comments().then((commentsCollection) => {
             return this.getCommentsByDbId(id).then((originComment) => {
                 return commentsCollection.removeOne({ _id: id }).then((deleteInfo) => {
                     if (deleteInfo.deletedCount === 0) {
-                        throw (`Could not delete comment with id of ${id}`);
+                        return false;
                     } else {
                         movies.removeScore(originComment.movieId, originComment.rating);
                         return "The data has been deleted!";
@@ -87,8 +85,11 @@ let exportedMethods = {
             let updateCommand = {
                 $set: updateInfo
             };
-            return commentsCollection.updateOne({ _id: id }, updateCommand).then(() => {
-                return this.getCommentsByDbId(id);
+            return this.getCommentsByDbId(id).then((originComment) => {
+                return commentsCollection.updateOne({ _id: id }, updateCommand).then(() => {
+                    movies.updateScore(originComment.movieId, updatedRating, originComment.rating);
+                    return this.getCommentsByDbId(id);
+                })
             })
         })
     }
