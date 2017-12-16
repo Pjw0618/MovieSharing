@@ -51,6 +51,7 @@ let exportedMethods = {
             return commentsCollection.insertOne(newComment).then((newInsert) => {
                 return newInsert.insertedId;
             }).then((newId) => {
+                console.log("added a comment!");
                 return this.getCommentsByDbId(newId);
             })
         })

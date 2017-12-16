@@ -14,7 +14,7 @@ let exportedMethods = {
     },
 
     getTopTen() {
-        return this.getAllMovies((movies) => {
+        return this.getAllMovies().then((movies) => {
             movies.sort((movie1, movie2) => {
                 let score1 = movie1.score;
                 let score2 = movie2.score;
@@ -22,8 +22,10 @@ let exportedMethods = {
                 if (!score2) score2 = -1;
                 return score2 - score1;
             });
+            // let topTen = movies.slice(0, (movies.length < 10 ? movies.length : 10));
+            // console.log(topTen.length)
             return movies.slice(0, (movies.length < 10 ? movies.length : 10));
-        });
+        })
     },
 
     getMovieById(id) {
@@ -57,9 +59,9 @@ let exportedMethods = {
             };
             newMovie.poster = im.processPoster(movie.poster, newMovie._id);
             newMovie.screenShots = [];
-            console.log(movie.screenShots)
+            // console.log(movie.screenShots)
             movie.screenShots.forEach((screen) => {
-                console.log(screen)
+                // console.log(screen)
                 newMovie.screenShots.push(im.precessScreen(screen));
             })
             return movieCollection.findOne({
@@ -85,12 +87,15 @@ let exportedMethods = {
                                 category: insertedMovie.category
                             }
                             es.addMovie(id, copy);
+                            console.log("added a movie!")
                             return insertedMovie;
                         }).catch((e) => {
-                            throw "Error inserting into ES!"
+                            return false;
+                            // throw "Error inserting into ES!"
                         })
                     }).catch((e) => {
-                        throw "Error inserting into MongoDB!"
+                        return false;
+                        // throw "Error inserting into MongoDB!"
                     })
                 }
             })

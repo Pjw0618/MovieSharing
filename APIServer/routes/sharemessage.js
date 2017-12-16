@@ -103,7 +103,7 @@ router.delete("/:id", async (req, res) => {
     });
     
     redisConnection.on("delete-from-back-share:request:*", (message, channel)=>{
-        console.log(message);
+        // console.log(message);
         res.json(message.data.message);
     })
 });

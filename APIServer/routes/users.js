@@ -124,7 +124,7 @@ router.post('/authenticate', (req, res, next) => {
 //login
 router.post('/login', (req, res, next) => {
 
-    console.log(req.body)
+    // console.log(req.body)
 
     return passport.authenticate('login', (err, success, data) => {
 
