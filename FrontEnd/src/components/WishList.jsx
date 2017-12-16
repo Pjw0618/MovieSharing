@@ -4,82 +4,64 @@ class Wish extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: localStorage.getItem('userid'),
             wishList: []
         }
     }
 
-    // componentDidMount() {
-    //     fetch('http://localhost:3001/user/getUserByDbId/'+this.state.userId)
-    //     .then((response) => {
-    //         console.log(response);
-    //         return response.json();
-    //     })
-    //     .catch((e) => {
-    //         console.log(e);
-    //     })
-    //     .then((message) => {
-    //         message.wishList.forEach(element => {
-    //             console.log(element);
-    //             fetch('http://localhost:3001/movie/getMovieById/'+element)
-    //             .then((res) => {
-    //                 return res.json();
-    //             })
-    //             .catch((e) => {
-    //                 console.log(e);
-    //             })
-    //             .then((result) => {
-    //                 this.state.wishList.push(result);
-    //             })
-    //         });
-    //     })
-    //     console.log(this.state.wishList)
-    // }
+    async componentDidMount() {
+        let self = this;
+        let userId = localStorage.getItem('userid');
 
-    componentDidMount() {
-        fetch('http://localhost:3001/user/getUserByDbId/' + this.state.userId)
-            .then((response) => {
-                console.log(response);
-                return response.json();
+        fetch('http://localhost:3001/user/getUserByDbId/' + userId, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json'
             })
-            .catch((e) => {
-                console.log(e);
+          }).then((response) =>  {
+              return response.json();
+          }).then((data) => {
+            console.log(data.wishMovies);
+            self.setState({
+                wishList: data.wishMovies
             })
-            .then((message) => {
-    
-                let promises = [];
-                message.wishList.forEach(element => {
-                    promises.push(fetch('http://localhost:3001/movie/getMovieById/' + element))
-                });
-                Promise.all(promises).then((responses) => {
-                    Promise.all(responses).then((values) => {
-                        values.forEach((result)=>{
-                            this.state.wishList.push(result);
-                        })
-                    })
-                })
-            })
-            console.log(this.state.wishList.length)
-        }    
+        });
+    }   
 
     render() {
-        return (
-            <section className="p-0" id="WishList">
-                <div className="container-fluid p-0">
-                    <div className="row no-gutters popup-gallery">
-                        <h2 className="namestyle">Wish List</h2>
-                        <div className="card-group">
-                            <ul className="wishList">
-                                {this.state.wishList.map((x) => {
-                                    <li><a href={`/MovieDetail/`+x._id}>{x.name}</a></li>
-                                })}
-                                {this.state.wishList.length}
-                            </ul>
+        if(this.state.wishList.length === 0) {
+            return (
+                <section className="p-0" id="WishList">
+                    <div className="container-fluid p-0">
+                        <div className="row no-gutters popup-gallery">
+                            <h2 className="namestyle">Wish List</h2>
+                            <div className="card-group">
+                                No wish
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        )
+                </section>
+            )
+        }
+        else {
+            return (
+                <section className="p-0" id="WishList">
+                    <div className="container-fluid p-0">
+                        <div className="row no-gutters">
+                            <h2 className="namestyle">Wish List</h2>
+                            <div className="card-group">
+                                <ul className="wishList">
+                                    {this.state.wishList.map((x) => 
+                                        <li className="col-lg-6 col-sm-6" key={x._id}> 
+                                            <div className="card-title watched" key={x._id}><a href={`../processedposters/`+x.poster}>{x.name}</a></div>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )
+        }
     }
 }
 export default Wish;

@@ -45,6 +45,7 @@ a:focus {
     justify-content: center;
     font-family: roboto!important;
 }
+
 .login-card:after {
     /* background: linear-gradient(-135deg, rgb(63, 81, 181), rgb(233, 30, 99)); */
     /* Login Card Arkaplan Rengi */
@@ -247,4 +248,12 @@ input:valid ~ label {
 
 .login-link:hover, .register-link:hover, .retrieve-link:hover {
     color: white;
+}
+
+.portrait {
+    opacity: 0;
+}
+
+.addPortrait {
+    margin-top: 10%;
 }

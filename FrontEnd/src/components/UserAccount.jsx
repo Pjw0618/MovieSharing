@@ -8,11 +8,9 @@ class UserAccount extends React.Component {
     render() {
         return (
             <div>           
-                <div>
-                    <TopBar />
-                    <BasicInfo />
-                    <UserLists />
-                </div>
+                <TopBar />
+                <BasicInfo />
+                <UserLists />
             </div>
         )
     }

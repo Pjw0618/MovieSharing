@@ -9,10 +9,13 @@ class MessageCard extends React.Component {
             senderId: localStorage.getItem("userid"),
             receiverName: "",
             receiverId: "",
-            message: ""
+            message: "",
+            movieId: "",
+            movieName: ""
         }
 
         this.handleInput = this.handleInput.bind(this);
+        this.handleSend = this.handleSend.bind(this);
     }
 
     handleInput(event) {
@@ -25,6 +28,7 @@ class MessageCard extends React.Component {
     }
 
     handleSend(event) {
+        event.preventDefault();
         //get user id by user name
         fetch("http://localhost:3001/user/getUserByUsername/"+this.state.receiverName)
         .then((response) => {
@@ -33,6 +37,7 @@ class MessageCard extends React.Component {
         })
         .catch((e) => {
             console.log(e);
+            alert("No such user")
         })
         .then((message) => {
             console.log(message);
@@ -40,12 +45,27 @@ class MessageCard extends React.Component {
                 receiverId: message._id
             })
         })
-
+        //get movie id by movie name
+        fetch("http://localhost:3001/movie/getmoviebyname/"+this.state.movieName)
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .catch((e) => {
+            console.log(e);
+            alert("No such movie")
+        })
+        .then((message) => {
+            console.log(message);
+            this.setState({
+                movieId: message._id
+            })
+        })
         //send message
         var sendMessage = {
             "senderId": this.state.senderId,
             "receiverId": this.state.receiverId,
-            "movieId": "",
+            "movieId": this.state.movieId,
             "message": this.state.message
         }
         request.post("http://localhost:3001/sharemessage/")
@@ -59,12 +79,20 @@ class MessageCard extends React.Component {
             }
             else{
               console.log(resp);
+              this.setState({
+                receiverName: "",
+                receiverId: "",
+                message: "",
+                movieId: "",
+                movieName: ""
+              })
+              alert("Submitted");
             }
         })
     }
     render() {
         return (
-            <div>
+            <form onSubmit={this.handleSend}>
             <div className="round hollow text-center">
                 <a href="#" className="open-btn" id="addClass"><i className="fa fa-whatsapp" aria-hidden="true"></i></a>
             </div>
@@ -76,18 +104,16 @@ class MessageCard extends React.Component {
                         <button data-widget="remove" id="removeClass" className="chat-header-button pull-right" type="button"><i className="glyphicon glyphicon-off"></i></button>
                     </div>
                 </div>
-                <div className="popup-messages">
-                    <div className="direct-chat-messages">
-                    </div>
-                </div>
                 <div className="popup-messages-footer">
-                    <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
+                    <textarea name="movieName" id="status_message" rows="10" cols="40" placeholder="Movie Name"
+                    value={this.state.movieName} onChange={this.handleInput} required />
+                    <textarea id="status_message" value={this.state.message} placeholder="Leave a message" rows="10" cols="40" name="message" onChange={this.handleInput}></textarea>
                     <div className="btn-footer">
-                        <button className="bg_none">Submit</button>
+                        <button type="submit" className="bg_none">Submit</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         )
     }
 }

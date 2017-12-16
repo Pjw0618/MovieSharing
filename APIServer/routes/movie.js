@@ -90,6 +90,42 @@ router.get("/getMovieById/:id", async (req, res) => {
 
 });
 
+router.get("/getMovieByName/:name", async (req, res) => {
+    let response = await nrpSender.sendMessage({
+
+        redis: redisConnection,
+        eventName: "movie-getMovieByName",
+        data: {
+
+            message: req.params.name
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("getMovieByName-from-back-movie:request:*", (message, channel) => {
+
+        res.json(message.data.message);
+    })
+
+});
+
+router.post("/getMoviesByIdList/", async (req, res) => {
+    let response = await nrpSender.sendMessage({
+
+        redis: redisConnection,
+        eventName: "movie-getbyidlist",
+        data: {
+
+            message: req.body.ids
+        },
+        expectsResponse: false
+    });
+    redisConnection.on("getbyidlist-from-back-movie:request:*", (message, channel) => {
+
+        res.json(message.data.message);
+    })
+
+});
+
 router.put("/:id", async (req, res) => {
     let info = req.body;
     info._id = req.params.id;

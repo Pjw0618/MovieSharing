@@ -308,6 +308,23 @@ redisConnection.on('movie-getMovieById:request:*', async (message, channel) => {
     })
 });
 
+redisConnection.on('movie-getMovieByName:request:*', async (message, channel) => {
+    
+        let name = message.data.message;
+        await moviedata.getMovieByMovieName(name).then(async (movie) => {
+            let response = await nrpSender.sendMessage({
+    
+                redis: redisConnection,
+                eventName: "getMovieByName-from-back-movie",
+                data: {
+    
+                    message: await movie
+                },
+                expectsResponse: false
+            });
+        })
+    });
+
 redisConnection.on('movie-put:request:*', async (message, channel) => {
 
     let info = message.data.message;
@@ -324,6 +341,24 @@ redisConnection.on('movie-put:request:*', async (message, channel) => {
         });
     })
 });
+
+redisConnection.on('movie-getbyidlist:request:*', async (message, channel) => {
+
+        let ids = message.data.message
+        // console.log(ids)
+        await moviedata.getMoviesByIdList(ids).then(async (search) => {
+            let response = await nrpSender.sendMessage({
+    
+                redis: redisConnection,
+                eventName: "getbyidlist-from-back-movie",
+                data: {
+    
+                    message: await search
+                },
+                expectsResponse: false
+            });
+        })
+    });
 
 redisConnection.on('movie-searchKeyword:request:*', async (message, channel) => {
 

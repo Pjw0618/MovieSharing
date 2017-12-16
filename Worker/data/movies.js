@@ -39,6 +39,17 @@ let exportedMethods = {
         });
     },
 
+    getMovieByMovieName(name) {
+        return movies().then((movieCollection) => {
+            return movieCollection.findOne({ name: name }).then((movie) => {
+                // if (!movie) {
+                //     throw "Movie not found!";
+                // }
+                return movie;
+            })
+        });
+    },
+
     addMovie(movie) {
         return movies().then((movieCollection) => {
             //data from front end includes name, year, directors, stars, writers, description, poster and category
@@ -144,6 +155,19 @@ let exportedMethods = {
                 return values;
             })
         })
+    },
+
+    getMoviesByIdList(ids) {
+        let promises = [];
+        if (ids) {
+            ids.forEach((id) => {
+                promises.push(this.getMovieById(id));
+            })
+        }
+        return Promise.all(promises).then((values) => {
+            return values;
+        })
+
     },
 
     // search for given category
