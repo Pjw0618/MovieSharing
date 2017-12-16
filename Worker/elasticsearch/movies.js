@@ -20,7 +20,8 @@ let exportedMethods = {
             id: id,
             body: movie
         }, function (error, response) {
-            console.log(response);
+            console.log("add a movie to ES!")
+            // console.log(response);
         });
     },
 

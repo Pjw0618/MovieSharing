@@ -3,6 +3,8 @@ const users = mongoCollections.users;
 const uuid = require('node-uuid');
 const bcrypt = require("bcrypt-nodejs");
 const movies = require('./movies');
+const im = require("../imagemagick");
+
 let exportedMethods = {
     getAllUsers() {
         return users().then((usersCollection) => {
@@ -62,6 +64,7 @@ let exportedMethods = {
                 _id: uuid.v4(),
                 username: user.username,
                 email: user.email, //decodeURIComponent?
+                profile: im.processProfile(user.profile, user.username),
                 watchedList: [],
                 wishList: [],
                 saltedPassword: bcrypt.hashSync(user.password),

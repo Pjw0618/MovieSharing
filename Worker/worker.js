@@ -26,6 +26,9 @@ client.deleteByQuery({
   });
  */
 //comment
+
+console.log("Worker started! Ready to process data!")
+
 redisConnection.on('comment-post:request:*', async (message, channel) => {
 
     let info = message.data.message;
