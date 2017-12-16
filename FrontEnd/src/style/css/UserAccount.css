@@ -240,3 +240,16 @@ input[type=checkbox]:checked+span {
     color: red!important;
 }
 
+.card-group li {
+    text-decoration: none;
+    display: block;
+}
+
+.card-group li a {
+    color: black!important;
+}
+
+.card-group li a:hover {
+    color: red!important;
+}
+
