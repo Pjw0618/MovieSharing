@@ -39,6 +39,17 @@ let exportedMethods = {
         });
     },
 
+    getMovieByMovieName(name) {
+        return movies().then((movieCollection) => {
+            return movieCollection.findOne({ name: name }).then((movie) => {
+                // if (!movie) {
+                //     throw "Movie not found!";
+                // }
+                return movie;
+            })
+        });
+    },
+
     addMovie(movie) {
         return movies().then((movieCollection) => {
             //data from front end includes name, year, directors, stars, writers, description, poster and category

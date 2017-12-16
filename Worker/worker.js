@@ -308,6 +308,23 @@ redisConnection.on('movie-getMovieById:request:*', async (message, channel) => {
     })
 });
 
+redisConnection.on('movie-getMovieByName:request:*', async (message, channel) => {
+    
+        let name = message.data.message;
+        await moviedata.getMovieByMovieName(name).then(async (movie) => {
+            let response = await nrpSender.sendMessage({
+    
+                redis: redisConnection,
+                eventName: "getMovieByName-from-back-movie",
+                data: {
+    
+                    message: await movie
+                },
+                expectsResponse: false
+            });
+        })
+    });
+
 redisConnection.on('movie-put:request:*', async (message, channel) => {
 
     let info = message.data.message;
