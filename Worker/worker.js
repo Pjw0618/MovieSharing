@@ -9,7 +9,7 @@ const redis = require("redis");
 const redisConnection = require("./redis/redis-connection");
 const nrpSender = require("./redis/nrp-sender-shim")
 const client = require("./config/elasticsearch");
-
+/*
 dbConnection().then((db) => {
     return db.dropDatabase()
 })
@@ -24,7 +24,11 @@ client.deleteByQuery({
   }, function (error, response) {
     console.log("ES deleted!")
   });
+ */
 //comment
+
+console.log("Worker started! Ready to process data!")
+
 redisConnection.on('comment-post:request:*', async (message, channel) => {
 
     let info = message.data.message;

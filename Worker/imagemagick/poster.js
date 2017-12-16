@@ -24,6 +24,7 @@ let exportedMethods = {
         im.resize(optionsObj, function (err, stdout) {
             if (err) console.log(err);
         });
+        console.log("Stored a movie poster!")
         return id + ".png";
     },
 
@@ -41,7 +42,30 @@ let exportedMethods = {
         im.resize(optionsObj, function (err, stdout) {
             if (err) throw "convert screen failed";
         });
+        console.log("Stored a movie screenshot!")
         return id + ".png";
+    },
+
+    processProfile(url, username){
+        const desPath = "../FrontEnd/public/profilepictures/";
+        var optionsObj = {
+            srcPath: url,
+            dstPath: desPath + username + ".png",
+            quality: 1.0,
+            width: "250",
+            height: "250",
+            format: 'png',
+            customArgs: [
+                '-gravity', 'center',
+                "-bordercolor", "black",
+                "-border", "5x5",
+            ]
+        };
+        im.resize(optionsObj, function (err, stdout) {
+            if (err) console.log(err);
+        });
+        console.log("Stored a user profile picture!")
+        return username + ".png";
     }
 }
 

@@ -44,10 +44,11 @@ let exportedMethods = {
                 message: message
             };
             return sharemessagesCollection.insertOne(newSharemessage).then((newInsert)=>{
-                console.log(newInsert.insertedId);
+                // console.log(newInsert.insertedId);
                 return newInsert.insertedId;
                 
             }).then((newId)=>{
+                console.log("added a sharemessage!")
                 return this.getMessagesByDbId(newId);
             })
         })

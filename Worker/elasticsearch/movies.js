@@ -20,7 +20,8 @@ let exportedMethods = {
             id: id,
             body: movie
         }, function (error, response) {
-            console.log(response);
+            console.log("add a movie to ES!")
+            // console.log(response);
         });
     },
 
@@ -66,12 +67,21 @@ let exportedMethods = {
             type: 'movie',
             body: {
                 query: {
-                    match: {
-                        category: category
+                    bool: {
+                        must: [{
+                            match: {
+                                category: category
+                            },
+                        },
+                        {
+                            multi_match: {
+                                query: keyword,
+                                fields: ["name", "year", "directors","stars","writers","description"]
+                            }
+                        }]
                     }
                 }
             },
-            q: keyword
         }).then((response) => {
             const data = response.hits.hits;
             return data;
