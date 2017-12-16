@@ -7,14 +7,23 @@ This is a movie sharing website, allowing users to post movies they like, make c
 ## Core Features
 
 User signup and login
+
 Post movies on the website
+
 Make comments and rating
+
 Mark a movie watched, or wishing
+
 See top rated movies
+
 Search in all movie using keyword(s)
+
 View movies by category
+
 Search movies in a specified category
+
 Share movies to other users(with a share message)
+
 etc.
 
 ## How to run
