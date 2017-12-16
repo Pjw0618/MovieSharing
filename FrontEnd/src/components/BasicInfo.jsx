@@ -2,34 +2,55 @@ import React from 'react';
 import ProfilePhoto from './ProfilePhoto.jsx';
 
 class BasicInfo extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            userId: localStorage.getItem('userid'),
+            user: {
+                username: localStorage.getItem('username'),
+                email: ""
+            }
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:3001/user/getUserByDbId/'+this.state.userId)
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .then((message) => {
+            console.log(message);
+            this.setState({
+                user: {
+                    username: message.username,
+                    email: message.email
+                }
+            })
+        })
+    }
+
     render() {
         return (
-            <section id="basicinfo">
-                <div className="container">
-                    <div className="row">
-                        <div className="photo col-lg-3 col-md-3 hidden-sm hidden-xs">
-                            <ProfilePhoto />
-                        </div>
-                        <div className="nameInfo col-lg-9 col-md-9 col-sm-12 col-xs-12">                        
-                            <h2 className="row">
-                                <input type="text" readonly="value" value="My basic profile" className="boldInput">  
-                                </input>
-                            </h2>
-                            <div class="conter"><h1 className="bold">Your Name</h1>  
-                                <br></br>                               
-                                <form>
-                                    <h5>First name:</h5>
-                                    <input type="text" readonly="value" value="firstname111" className="firstname name"></input>
-                                    <br></br>
-                                    <br></br>
-                                    <h5>Last name:</h5>
-                                    <input type="text" readonly="value" value="lastname111"className="lasttname name"></input>
-                                </form>                              
-                            </div>   
-                        </div>
+            <div className="basicInfo">
+                <div className="row">
+                    <div className="photo col-lg-3 col-md-3 hidden-sm hidden-xs">
+                        <ProfilePhoto />
+                    </div>
+                    <div className="nameInfo col-lg-9 col-md-9 col-sm-12 col-xs-12">                        
+                        <h2 className="row">
+                            <div className="boldInput">Dashboard</div>
+                        </h2>
+                        <div className="conter">
+                            <h1 className="bold">{this.state.user.username}</h1>
+                            <div>{this.state.user.email}</div>
+                        </div>   
                     </div>
                 </div>
-            </section>
+            </div>
         )
     }
 }

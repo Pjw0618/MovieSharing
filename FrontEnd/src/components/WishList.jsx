@@ -1,29 +1,80 @@
 import React from 'react';
 
-var WishBody = [];
-var WishList;
-//testing data
-var pic1 = "http://cdn.playbuzz.com/cdn/db6a5640-13e7-43b9-83fa-749193b62498/bb0b96c2-8330-453e-8ab2-471199af2391.jpg";
-for (var i = 0; i < 10; i++){
-    WishBody.push(
-    <div className="col-lg-6 col-sm-6" key={i}> 
-        <a className="card" href={pic1}>
-            <img className="img-fluid" src={pic1} alt="" />
-            <div className="card-title">Movie Name</div>
-        </a>        
-    </div>)
-}
-
-
 class Wish extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userId: localStorage.getItem('userid'),
+            wishList: []
+        }
+    }
+
+    // componentDidMount() {
+    //     fetch('http://localhost:3001/user/getUserByDbId/'+this.state.userId)
+    //     .then((response) => {
+    //         console.log(response);
+    //         return response.json();
+    //     })
+    //     .catch((e) => {
+    //         console.log(e);
+    //     })
+    //     .then((message) => {
+    //         message.wishList.forEach(element => {
+    //             console.log(element);
+    //             fetch('http://localhost:3001/movie/getMovieById/'+element)
+    //             .then((res) => {
+    //                 return res.json();
+    //             })
+    //             .catch((e) => {
+    //                 console.log(e);
+    //             })
+    //             .then((result) => {
+    //                 this.state.wishList.push(result);
+    //             })
+    //         });
+    //     })
+    //     console.log(this.state.wishList)
+    // }
+
+    componentDidMount() {
+        fetch('http://localhost:3001/user/getUserByDbId/' + this.state.userId)
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+            .then((message) => {
+    
+                let promises = [];
+                message.wishList.forEach(element => {
+                    promises.push(fetch('http://localhost:3001/movie/getMovieById/' + element))
+                });
+                Promise.all(promises).then((responses) => {
+                    Promise.all(responses).then((values) => {
+                        values.forEach((result)=>{
+                            this.state.wishList.push(result);
+                        })
+                    })
+                })
+            })
+            console.log(this.state.wishList.length)
+        }    
+
     render() {
         return (
             <section className="p-0" id="WishList">
                 <div className="container-fluid p-0">
                     <div className="row no-gutters popup-gallery">
-                        <h2 className="namestyle">Wish Movies</h2>
+                        <h2 className="namestyle">Wish List</h2>
                         <div className="card-group">
-                            {WishBody}
+                            <ul className="wishList">
+                                {this.state.wishList.map((x) => {
+                                    <li><a href={`/MovieDetail/`+x._id}>{x.name}</a></li>
+                                })}
+                                {this.state.wishList.length}
+                            </ul>
                         </div>
                     </div>
                 </div>

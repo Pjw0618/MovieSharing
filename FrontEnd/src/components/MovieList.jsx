@@ -12,7 +12,8 @@ class MovieList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            movieList: [movie]
+            movieList: [movie],
+            headerTitle: ""
         };
     
         // this.handleInput = this.handleInput.bind(this);
@@ -35,7 +36,8 @@ class MovieList extends React.Component {
             .then((message) => {
                 console.log(message);
                 this.setState({
-                    movieList: message
+                    movieList: message,
+                    headerTitle: "Search By Keyword"
                 })
             })
         }
@@ -54,7 +56,8 @@ class MovieList extends React.Component {
                 .then((message) => {
                     console.log(message);
                     this.setState({
-                        movieList: message
+                        movieList: message,
+                        headerTitle: category.toUpperCase()
                     })
                 })
             }
@@ -72,7 +75,8 @@ class MovieList extends React.Component {
                 .then((message) => {
                     console.log(message);
                     this.setState({
-                        movieList: message
+                        movieList: message,
+                        headerTitle: 'Search In \"' + category.toUpperCase + '\"'
                     })
                 })
             }
@@ -84,33 +88,12 @@ class MovieList extends React.Component {
             <div>
                 <TopBar/>
                 <div className="header">
-                    <div className="header-title"></div>
+                    <div className="header-title">{this.state.headerTitle}</div>
                 </div>
         
                 <div className="content">
                     <div className="gal">
-                        {this.state.movieList.map((x) => <a key={x.id} href={`/MovieDetail/`+x.id}><img src={x.poster} alt={x.name} /></a>)}
-                        {/* <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mWpE3Q/2.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mysOxk/3.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mWpE3Q/2.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mysOxk/3.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mysOxk/3.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mysOxk/3.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/i0PmHk/1.jpg" alt=""/></a>
-                        <a href="#"><img src="https://preview.ibb.co/mWpE3Q/2.jpg" alt=""/></a>    */}
+                        {this.state.movieList.map((x) => <a key={x._id} href={`/MovieDetail/`+x._id}><img src={`../processedposters/`+x.poster} alt={x.name} /></a>)}
                     </div>
                 </div>
             </div>

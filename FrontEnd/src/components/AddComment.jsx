@@ -65,15 +65,8 @@ class AddComment extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // var AddComment = new FormData();
         var dt = new Date();
 
-        // AddComment.append('userId', this.state.userid);
-        // AddComment.append('movieId', this.state.movieId);
-        // AddComment.append('username', this.state.username);
-        // AddComment.append('content', this.state.content);
-        // AddComment.append('rating', this.state.rating);
-        // AddComment.append('date', dt.toLocaleDateString());
         var AddComment = {
             'userId': this.state.userid,
             'movieId': this.state.movieId,

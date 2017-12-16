@@ -54,13 +54,13 @@ class TopBar extends React.Component {
                         <span className="navbar-toggler-icon"></span>
                     </Button>
                     <div className="collapse navbar-collapse" id="navbarResponsive">
-                    <ul className="navbar-nav ml-auto">
-                        <Searching />
-                        <li className="nav-item">
-                            <Link className="nav-link js-scroll-trigger" to="#Top10" onClick={window.location.reload}>Top Ten</Link>
-                        </li>         
-                        {this.state.userAccount}
-                    </ul>
+                        <ul className="navbar-nav ml-auto">
+                            <Searching />
+                            <li className="nav-item">
+                                <Link className="nav-link js-scroll-trigger" to="#Top10" onClick={window.location.reload}>Top Ten</Link>
+                            </li>         
+                            {this.state.userAccount}
+                        </ul>
                     </div>
                 </div>
     	    </nav>

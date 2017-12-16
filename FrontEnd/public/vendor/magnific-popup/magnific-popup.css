@@ -243,8 +243,9 @@ button::-moz-focus-inner {
 
 /* Main image in popup */
 img.mfp-img {
-  width: auto;
-  max-width: 100%;
+  /* width: auto; */
+  /* max-width: 100%; */
+  width: 500px;
   height: auto;
   display: block;
   line-height: 0;

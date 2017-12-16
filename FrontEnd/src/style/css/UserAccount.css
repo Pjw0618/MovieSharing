@@ -1,5 +1,15 @@
 body.UserAccount {
-    background: black!important;
+    margin: 0;
+    padding: 0;
+    background:#eee;
+    font-family: roboto;
+    display:flex; /* You delete it on your web page */
+    justify-content:center;/* and this - delete */
+    background: url('https://static.pexels.com/photos/693651/pexels-photo-693651.jpeg') center center fixed repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .mainbody {
@@ -86,6 +96,7 @@ input[type=checkbox]:checked+span {
 }
 
 .boldInput {
+    width: 90%;
     font-weight:bold;
     margin-left: 28px;
     padding-left: 279px;
@@ -140,9 +151,9 @@ input[type=checkbox]:checked+span {
 .conter  
 {  
     background:white;  
-    width:800px;  
-    height:305px;  
-    border:1px solid rgba(202, 194, 194, 0.836);  
+    width:90%;  
+    height:80%;  
+    /* border:1px solid rgba(202, 194, 194, 0.836);   */
     margin:0px auto;  
     padding:40px;  
 }  
@@ -197,3 +208,35 @@ input[type=checkbox]:checked+span {
 .watched {
     color: gray !important
 }
+
+.panel-default {
+    width: 77%;
+    background: white;
+    text-align: center;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.panel-default div {
+    padding: 5px;
+}
+
+.panel-default div li {
+    margin: 15px;
+}
+
+.basicInfo {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.nav-tabs li a {
+    color: black;
+}
+
+.nav-tabs li a:hover,
+.active {
+    color: red!important;
+}
+
