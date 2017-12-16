@@ -1,33 +1,33 @@
 # MovieSharing
 
-##Introduction
+## Introduction
 
 This is a movie sharing website, allowing users to post movies they like, make comments and share movies to other users.
 
-##Core Features
+## Core Features
 
-####User signup and login
-####Post movies on the website
-####Make comments and rating
-####Mark a movie watched, or wishing
-####See top rated movies
-####Search in all movie using keyword(s)
-####View movies by category
-####Search movies in a specified category
-####Share movies to other users(with a share message)
-####etc.
+#### User signup and login
+#### Post movies on the website
+#### Make comments and rating
+#### Mark a movie watched, or wishing
+#### See top rated movies
+#### Search in all movie using keyword(s)
+#### View movies by category
+#### Search movies in a specified category
+#### Share movies to other users(with a share message)
+#### etc.
 
-##How to run
+## How to run
 
-###Environment
+### Environment
 
 You need to have [MongoDB](https://www.mongodb.com), [Elasticsearch](https://www.elastic.co/products/elasticsearch), [ImageMagick](https://www.imagemagick.org/script/index.php) and [Redis](https://redis.io/) installed.
 
 Run the services needed(MongoDB, Elasticsearch and Redis) before going next step.
 
-###Start the website
+### Start the website
 
-####Data Worker
+#### Data Worker
 
 Under ./Worker
 
@@ -35,7 +35,7 @@ Under ./Worker
 node worker.js
 ```
 
-####API Server
+#### API Server
 
 Under ./APIServer
 
@@ -43,7 +43,7 @@ Under ./APIServer
 node app.js
 ```
 
-####Front End Server
+#### Front End Server
 
 Under ./FrontEnd
 
