@@ -27,6 +27,23 @@ body.MovieByCategory {
     /* background: white; */
 }
 
+.header {
+    background: url(https://images.pexels.com/photos/571169/pexels-photo-571169.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.header-title {
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    top: 30%;
+    color: white
+}
+
 .gal {
 	
 	

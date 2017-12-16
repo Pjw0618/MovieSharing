@@ -3,6 +3,8 @@ import TopBar from './TopBar';
 import ViewComment from './ViewComment';
 import AddComment from './AddComment';
 import fetch from 'isomorphic-fetch';
+import Auth from '../module/Auth';
+import request from 'superagent';
 import '../style/css/MovieDetail.css'
 
 class MovieDetail extends React.Component {
@@ -26,6 +28,9 @@ class MovieDetail extends React.Component {
                 year: "message.year"
             }
         };
+
+        this.markWatched = this.markWatched.bind(this);
+        this.addWishList = this.addWishList.bind(this);
     }
 
     async componentWillMount() {
@@ -57,7 +62,32 @@ class MovieDetail extends React.Component {
                 }
             })
         })
+    }
 
+    markWatched(event) {
+        request.put('http://localhost:3001/user/watchedList/'+localStorage.getItem("userid")+"/"+this.state.movieId)
+        .send({"id": localStorage.getItem("userid"), "movie": this.state.movieId})
+        .end((err, resp) =>{
+            if (resp.body.success == false) 
+            { 
+              console.log("internal error:");
+              console.error(err);
+              console.error(resp.body.message);
+            }
+        });
+    }
+
+    addWishList(event) {
+        request.put('http://localhost:3001/user/wishList/'+localStorage.getItem("userid")+"/"+this.state.movieId)
+        .send({"id": localStorage.getItem("userid"), "movie": this.state.movieId})
+        .end((err, resp) =>{
+            if (resp.body.success == false) 
+            { 
+              console.log("internal error:");
+              console.error(err);
+              console.error(resp.body.message);
+            }
+        });
     }
 
     render() {
@@ -68,7 +98,6 @@ class MovieDetail extends React.Component {
                     <div className="movieDetailCard">
                         <div className="poster-kapsul">
                             <img className="poster" src={`../processedposters/`+this.state.movie.poster} alt={this.state.movie.name} />
-                            {/* <input className="giris-yap-buton" type="submit" value="SUBMIT" id={this.state.displayForm} /> */}
                             <a className="giris-yap-buton" href="../UploadMovie" id={this.state.displayCongrats}>UPDATE</a>
                         </div>
 
@@ -105,8 +134,13 @@ class MovieDetail extends React.Component {
                                 </div>
                             </div>
                         </div>
+                            <div className="behavIcons">
+                                <button type="button" class = "btn btn-primary" onClick={this.markWatched}>Mark As Wached</button>
+                                <button type="button" class = "btn btn-success" onClick={this.addWishList}>Add To WatchList</button>                                
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    
                 <div className="comment-card">
                 <ViewComment movieId={this.state.movieId} movie={this.state.movie}/>
                 </div>

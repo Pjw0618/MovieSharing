@@ -1,5 +1,6 @@
 import React from 'react';
 import Auth from '../module/Auth';
+import MessageCard from './Message';
 
 class MastTop extends React.Component {
     constructor(props) {
@@ -37,6 +38,7 @@ class MastTop extends React.Component {
                         </div>
                     </div>
                 </div>
+                <MessageCard/>
             </header>
         )
     }
