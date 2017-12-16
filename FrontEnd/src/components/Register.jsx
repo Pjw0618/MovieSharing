@@ -1,6 +1,7 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch';
-import AddPortrait from './AddPortrait';
+import request from 'superagent';
+var FormData = require('form-data');
 
 var clear = {
     clear: 'both'
@@ -19,6 +20,7 @@ class Register extends React.Component {
     
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.addPortrait = this.addPortrait.bind(this);
     }
 
     handleInput(event) {
@@ -31,24 +33,41 @@ class Register extends React.Component {
         });
     }
 
+    addPortrait(event) {
+        console.log("in portrait")
+        this.setState({
+            portrait: event.target.files[0]
+        })
+    }
+
     handleSubmit(event) {
+        event.preventDefault();
+        console.log(this.state)
         if(this.state.confirmPassword != this.state.password) {
             alert("Confirm password doesn't match");
-            event.preventDefault();
+            
         }
         else {
-            fetch('http://localhost:3001/user/signup', {
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache'
-                  }),
-                body: JSON.stringify(this.state)
-              }).then(function(res) {
-                  return res.json();
-              }).then(function(json) {
-                  alert("Register successfully");
-            });
+            var register = new FormData();
+            register.append('username',this.state.username);
+            register.append('email',this.state.email);
+            register.append('password',this.state.password);
+            register.append('profile',this.state.portrait);
+
+            request.post('http://localhost:3001/user/signup')
+            .send(register)
+            .end((err, resp) =>{
+                if (resp.body.success == false) 
+                { 
+                  console.log("internal error:");
+                  console.error(err);
+                  console.error(resp.body.message);
+                }
+                else{
+                    alert("Register successfully");
+                    window.location.replace('/Login')
+                }
+            });  
         }
     }
 
@@ -89,7 +108,21 @@ class Register extends React.Component {
                     <input className="kayit-ol-buton" type="submit" value="Register" />
                 </div>
                 <a className="login-link" href="javascript:void('login-link');">Already have an account ? Log In.</a>
-                <AddPortrait/>
+
+                {/* add portrait */}
+                <div className="modal fade addPortrait" id="addPortrait">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <div className="row">
+                                    <div className="col-md-6 product_content">
+                                        <input onChange={this.addPortrait} type="file" name="portrait" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         )
     }

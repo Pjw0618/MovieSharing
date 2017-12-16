@@ -25,7 +25,7 @@ class Routes extends Component {
             <Route path = { `/MovieDetail/:movieId` } component = {MovieDetail} />
             <Route path = { `/MovieByKey/:key` } component = {MovieList} />
             <Route path = { `/MovieByCategory/:category` } component = {MovieList} />
-            <Route path = { `/MovieByCategory/:category/:key` } component = {MovieList} />            
+            <Route path = { `/MovieByCategory/:category/:key` } component = {MovieList} />     
           </Switch>
         </div>
     );

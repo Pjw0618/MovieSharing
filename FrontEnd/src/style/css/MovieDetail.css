@@ -333,3 +333,11 @@ a:focus {
     padding:0px 0px 0px 0px;
     outline: 0;
 }
+
+#show {
+    display: block;
+}
+
+#hide {
+    display: none;
+}

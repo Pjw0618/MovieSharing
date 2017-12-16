@@ -1,5 +1,4 @@
 import React from 'react';
-import ProfilePhoto from './ProfilePhoto.jsx';
 
 class BasicInfo extends React.Component {
     constructor(props){
@@ -8,7 +7,8 @@ class BasicInfo extends React.Component {
             userId: localStorage.getItem('userid'),
             user: {
                 username: localStorage.getItem('username'),
-                email: ""
+                email: "",
+                portrait: ""
             }
         }
     }
@@ -23,11 +23,12 @@ class BasicInfo extends React.Component {
             console.log(e);
         })
         .then((message) => {
-            console.log(message);
+            console.log(message.profile);
             this.setState({
                 user: {
                     username: message.username,
-                    email: message.email
+                    email: message.email,
+                    portrait: message.profile
                 }
             })
         })
@@ -35,22 +36,15 @@ class BasicInfo extends React.Component {
 
     render() {
         return (
-            <div className="basicInfo">
-                <div className="row">
-                    <div className="photo col-lg-3 col-md-3 hidden-sm hidden-xs">
-                        <ProfilePhoto />
-                    </div>
-                    <div className="nameInfo col-lg-9 col-md-9 col-sm-12 col-xs-12">                        
-                        <h2 className="row">
-                            <div className="boldInput">Dashboard</div>
-                        </h2>
-                        <div className="conter">
-                            <h1 className="bold">{this.state.user.username}</h1>
-                            <div>{this.state.user.email}</div>
-                        </div>   
-                    </div>
-                </div>
+            <div className="userProfile">
+            <div className="span3 well">
+                <center/>
+                <img src={`../profilepictures/`+this.state.user.portrait}  name="aboutme" width="140" height="140" className="img-circle"/>
+                <h3>{this.state.user.username}</h3>
+                <em>{this.state.user.email}</em>
+                <center/>
             </div>
+        </div>
         )
     }
 }

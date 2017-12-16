@@ -5,8 +5,10 @@ class ProfilePhoto extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            portrait: this.props.portrait
         }
+
+        console.log(this.props.portrait)
     }
     render() {
         return (
@@ -15,7 +17,7 @@ class ProfilePhoto extends React.Component {
                     <div className="card-body">
                         <div align="center">
                             <div >
-                                <img className="img-thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="300px" height="300px"></img>
+                                <img className="img-thumbnail img-responsive" src={`../profilepictures/`+this.state.portrait} width="300px" height="300px"></img>
                             </div>
                             <br></br>
                         </div>

@@ -52,7 +52,7 @@ class Wish extends React.Component {
                                 <ul className="wishList">
                                     {this.state.wishList.map((x) => 
                                         <li className="col-lg-6 col-sm-6" key={x._id}> 
-                                            <div className="card-title watched" key={x._id}><a href={`/MovieDetail/`+x._id}>{x.name}</a></div>   
+                                            <div className="card-title watched" key={x._id}><a href={`../processedposters/`+x.poster}>{x.name}</a></div>
                                         </li>
                                     )}
                                 </ul>

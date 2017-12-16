@@ -7,13 +7,14 @@
 .popup-box {
    background-color: #ffffff;
     border: 1px solid #b0b0b0;
-    bottom: 0;
+    bottom: 20px;
     display: none;
-    height: 415px;
+    height: 200px;
     position: fixed;
     right: 70px;
     width: 300px;
     font-family: 'Open Sans', sans-serif;
+    z-index: 100
 }
 .round.hollow {
     margin-top: 90vh;
@@ -303,6 +304,6 @@
     position: relative;
 }
 
-.receiverName {
+.receiverName, .movieName {
     border: none;
 }

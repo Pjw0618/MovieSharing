@@ -210,11 +210,12 @@ input[type=checkbox]:checked+span {
 }
 
 .panel-default {
-    width: 77%;
+    width: 100%;
     background: white;
     text-align: center;
-    margin-left: 10%;
+    /* margin-left: 10%; */
     margin-top: 5%;
+    opacity: 0.9
 }
 
 .panel-default div {
@@ -253,3 +254,27 @@ input[type=checkbox]:checked+span {
     color: red!important;
 }
 
+.userProfile {
+    width: 70vw;
+    opacity: 0.9
+}
+
+.span3 {
+    text-align: center;
+    background: white;
+    margin-top: 14%;
+    padding: 15px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.modal-content {
+    margin-top:20%;
+    /* opacity: 1; */
+    z-index: 5;
+}
+.modal-body div {
+    display: inline;
+}

@@ -5,6 +5,7 @@ import AddComment from './AddComment';
 import fetch from 'isomorphic-fetch';
 import Auth from '../module/Auth';
 import request from 'superagent';
+import FormData from 'form-data';
 import '../style/css/MovieDetail.css'
 
 class MovieDetail extends React.Component {
@@ -26,14 +27,26 @@ class MovieDetail extends React.Component {
                 wishingUsers: [],
                 screenplay: [],
                 year: "message.year"
-            }
+            },
+            displayMovie: "show",
+            displayUpdate: "hide",
+            newName: "",
+            newYear: "",
+            newDirectors: "",
+            newStars: "",
+            newWriters: "",
+            newDescription: "",
+            newCategory: ""
         };
 
         this.markWatched = this.markWatched.bind(this);
         this.addWishList = this.addWishList.bind(this);
+        this.switchToUpdate = this.switchToUpdate.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         var movieId = window.location.pathname.split('/')[2];
         fetch("http://localhost:3001/movie/getMovieById/" + movieId)
         .then((response) => {
@@ -59,7 +72,14 @@ class MovieDetail extends React.Component {
                     wishingUsers: message.wishingUsers,
                     screenplay: message.writers,
                     year: message.year
-                }
+                },
+                newName: message.name,
+                newYear: message.year,
+                newDirectors: message.directors,
+                newStars: message.stars,
+                newWriters: message.writers,
+                newDescription: message.description,
+                newCategory: message.category
             })
         })
     }
@@ -90,6 +110,43 @@ class MovieDetail extends React.Component {
         });
     }
 
+    switchToUpdate(event) {
+        this.setState({displayMovie: "hide"});
+        this.setState({displayUpdate: "show"});
+    }
+
+    handleInput(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+    
+    handleUpdate(event) {
+        fetch('http://localhost:3001/movie/'+this.state.movieId, {
+            method: 'PUT',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                "name": this.state.newName,
+                "year": this.state.newYear,
+                "directors": this.state.newDirectors,
+                "stars": this.state.newStars,
+                "writers": this.state.newWriters,
+                "description": this.state.newDescription,
+                "category": this.state.newCategory
+            })
+          }).then((response) =>  {
+              return response.json();
+          }).then((data) => {
+              console.log(data);
+        });
+    }
+
     render() {
         return (
             <div>
@@ -98,10 +155,11 @@ class MovieDetail extends React.Component {
                     <div className="movieDetailCard">
                         <div className="poster-kapsul">
                             <img className="poster" src={`../processedposters/`+this.state.movie.poster} alt={this.state.movie.name} />
-                            <a className="giris-yap-buton" href="../UploadMovie" id={this.state.displayCongrats}>UPDATE</a>
+                            <a className="giris-yap-buton" href="#" onClick={this.switchToUpdate} id={this.state.displayMovie}>UPDATE</a>
+                            <a className="giris-yap-buton" href={`/MovieDetail/`+this.state.movieId} id={this.state.displayUpdate}>CANCEL</a>                            
                         </div>
 
-                        <div className="col-lg-12">
+                        <div className="col-lg-12" id={this.state.displayMovie}>
                             <div className="movieDetail-group">
                                 <div className="movieName">{this.state.movie.name}</div>
                                 <div className="releaseYear">{this.state.movie.year}</div>
@@ -134,12 +192,67 @@ class MovieDetail extends React.Component {
                                 </div>
                             </div>
                         </div>
-                            <div className="behavIcons">
-                                <button type="button" class = "btn btn-primary" onClick={this.markWatched}>Mark As Wached</button>
-                                <button type="button" class = "btn btn-success" onClick={this.addWishList}>Add To WatchList</button>                                
-                            </div>
+                        <div className="behavIcons" id={this.state.displayMovie}>
+                            <button type="button" class = "btn btn-primary" onClick={this.markWatched}>Mark As Wached</button>
+                            <button type="button" class = "btn btn-success" onClick={this.addWishList}>Add To WatchList</button>                                
                         </div>
+
+                         {/*update  */}
+                         <form onSubmit={this.handleUpdate}>
+                         <div id={this.state.displayUpdate} className="col-lg-12">
+                            <h2>{this.state.newName}</h2>
+                            <br/>
+                            <div className="upload-group">
+                                <input name="newCategory" type="text" value={this.state.newCategory} onChange={this.handleInput} />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">view_list</i><span className="span-input">Category</span></label>
+                            </div>
+
+                            <div className="upload-group">
+                                <input name="newYear" type="text" value={this.state.newYear} onChange={this.handleInput}  />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">date_range</i><span className="span-input">Release Year</span></label>
+                            </div><br/>
+
+                            <div className="upload-group">
+                                <input name="newDirectors" type="text" value={this.state.newDirectors} onChange={this.handleInput}  />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">videocam</i><span className="span-input">Directed By</span></label>
+                            </div>
+                        
+                            <div className="upload-group">
+                                <input name="newStars" type="text" value={this.state.newStars} onChange={this.handleInput}  />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon"><i className="material-icons">movie_filter</i></i><span className="span-input">Starring</span></label>
+                            </div>
+
+                            <div className="upload-group">
+                                <input name="newWriters" type="text" value={this.state.newWriters} onChange={this.handleInput}  />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">assignment</i><span className="span-input">Screenplay By</span></label>
+                            </div>
+                            <br/>
+
+                            <div className="upload-group">
+                                <textarea name="newDescription" value={this.state.newDescription} onChange={this.handleInput} cols="50"  />
+                                <span className="highlight"></span>
+                                <span className="bar"></span>
+                                <label><i className="material-icons input-ikon">description</i><span className="span-input">Brief Description</span></label>
+                            </div>
+                            <br/>
+                            <div className="behavIcons" id={this.state.displayUpdate}>
+                                <button type="submit" class = "btn btn-primary">SUBMIT</button>
+                            </div>
+                            <output id="result" />
+                        </div>
+                        </form>
                     </div>
+                </div>
                     
                 <div className="comment-card">
                 <ViewComment movieId={this.state.movieId} movie={this.state.movie}/>
