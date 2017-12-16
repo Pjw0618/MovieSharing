@@ -17,7 +17,14 @@ let exportedMethods = {
         return users().then((usersCollection) => {
             return usersCollection.findOne({ _id: id }).then((user) => {
                 // if (!user) throw "Can not find user";
-                return user;
+                return movies.getMoviesByIdList(user.wishList).then((wishMovies) => {
+                    return movies.getMoviesByIdList(user.watchedList).then((watchedMovies) => {
+                        user.watchedMovies = watchedMovies;
+                        user.wishMovies = wishMovies;
+                        return user;
+                    })
+                })
+                
             })
         })
     },
