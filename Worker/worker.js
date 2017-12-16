@@ -327,7 +327,7 @@ redisConnection.on('movie-put:request:*', async (message, channel) => {
 
 redisConnection.on('movie-getbyidlist:request:*', async (message, channel) => {
 
-        let ids = JSON.parse(message.data.message);
+        let ids = message.data.message
         // console.log(ids)
         await moviedata.getMoviesByIdList(ids).then(async (search) => {
             let response = await nrpSender.sendMessage({

@@ -90,14 +90,14 @@ router.get("/getMovieById/:id", async (req, res) => {
 
 });
 
-router.get("/getMoviesByIdList/:ids", async (req, res) => {
+router.post("/getMoviesByIdList/", async (req, res) => {
     let response = await nrpSender.sendMessage({
 
         redis: redisConnection,
         eventName: "movie-getbyidlist",
         data: {
 
-            message: req.params.ids
+            message: req.body.ids
         },
         expectsResponse: false
     });
