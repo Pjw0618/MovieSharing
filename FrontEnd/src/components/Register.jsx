@@ -1,5 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch';
+import AddPortrait from './AddPortrait';
 
 var clear = {
     clear: 'both'
@@ -13,6 +14,7 @@ class Register extends React.Component {
             email: "",
             password: "",
             confirmPassword: "",
+            portrait: ""
         };
     
         this.handleInput = this.handleInput.bind(this);
@@ -82,9 +84,12 @@ class Register extends React.Component {
                     <span className="bar"></span>
                     <label><i className="material-icons input-sifre-ikon">lock</i><span className="span-input">Password Again</span></label>
                 </div>
-
-                <input className="kayit-ol-buton" type="submit" value="Register" />
+                <div className="poster-kapsul">
+                    <a className="giris-yap-buton" data-toggle="modal" data-target="#addPortrait">Upload Portrait</a>
+                    <input className="kayit-ol-buton" type="submit" value="Register" />
+                </div>
                 <a className="login-link" href="javascript:void('login-link');">Already have an account ? Log In.</a>
+                <AddPortrait/>
             </form>
         )
     }
