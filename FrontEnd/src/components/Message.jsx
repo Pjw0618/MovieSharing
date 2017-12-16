@@ -101,7 +101,7 @@ class MessageCard extends React.Component {
                     <input name="receiverName" className="receiverName" type="text" placeholder="Receiver"
                     value={this.state.receiverName} onChange={this.handleInput} required />
                     <div className="popup-head-right pull-right">
-                        <button data-widget="remove" id="removeClass" className="chat-header-button pull-right" type="button"><i className="glyphicon glyphicon-off"></i></button>
+                        <button data-widget="remove" id="removeClass" className="chat-header-button pull-right" type="button"><i class="material-icons">clear</i></button>
                     </div>
                 </div>
                 <div className="popup-messages-footer">

@@ -143,9 +143,10 @@
 	vertical-align: top !important;
 }
 .chat-header-button {
-    background: transparent none repeat scroll 0 0;
-    border: 1px solid #636364;
-    border-radius: 50%;
+    /* background: transparent none repeat scroll 0 0; */
+    /* border: 1px solid #636364; */
+    /* border-radius: 50%; */
+    border: none;
     font-size: 14px;
     height: 30px;
     width: 30px;
