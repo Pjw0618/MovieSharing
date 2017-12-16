@@ -254,6 +254,12 @@ input[type=checkbox]:checked+span {
     color: red!important;
 }
 
+.card-group, 
+.wishList,
+.watchedList {
+    width: 100%!important;
+    text-align: center;
+}
 .userProfile {
     width: 70vw;
     opacity: 0.9

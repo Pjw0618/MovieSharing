@@ -79,7 +79,14 @@ class MessageCard extends React.Component {
             }
             else{
               console.log(resp);
-              alert("Submitted")
+              this.setState({
+                receiverName: "",
+                receiverId: "",
+                message: "",
+                movieId: "",
+                movieName: ""
+              })
+              alert("Submitted");
             }
         })
     }
@@ -100,7 +107,7 @@ class MessageCard extends React.Component {
                 <div className="popup-messages-footer">
                     <textarea name="movieName" id="status_message" rows="10" cols="40" placeholder="Movie Name"
                     value={this.state.movieName} onChange={this.handleInput} required />
-                    <textarea id="status_message" placeholder="Leave a message" rows="10" cols="40" name="message" onChange={this.handleInput}></textarea>
+                    <textarea id="status_message" value={this.state.message} placeholder="Leave a message" rows="10" cols="40" name="message" onChange={this.handleInput}></textarea>
                     <div className="btn-footer">
                         <button type="submit" className="bg_none">Submit</button>
                     </div>
