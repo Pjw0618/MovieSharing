@@ -31,7 +31,7 @@ class Top10 extends React.Component {
                 <div className="container-fluid p-0">
                     <div className="row no-gutters popup-gallery">
                     {this.state.Top10.slice(1).map((x) => 
-                        <div className="col-lg-4 col-sm-6" key={x.name}>
+                        <div className="col-lg-3 col-sm-4" key={x.name}>
                             <a className="portfolio-box" href={`../processedposters/`+x.poster}>
                                 <img className="img-fluid" src={`../processedposters/`+x.poster} alt={x.name} />
                                 <div className="portfolio-box-caption">
