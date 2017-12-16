@@ -146,6 +146,17 @@ let exportedMethods = {
         })
     },
 
+    getMoviesByIdList(ids) {
+        let promises = [];
+        ids.forEach((id) => {
+            promises.push(this.getMovieById(id));
+        })
+        return Promise.all(promises).then((values) => {
+            return values;
+        })
+
+    },
+
     // search for given category
     searchByCategory(category) {
         return es.searchByCategory(category).then((results) => {
