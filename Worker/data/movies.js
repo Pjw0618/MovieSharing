@@ -148,9 +148,11 @@ let exportedMethods = {
 
     getMoviesByIdList(ids) {
         let promises = [];
-        ids.forEach((id) => {
-            promises.push(this.getMovieById(id));
-        })
+        if (ids) {
+            ids.forEach((id) => {
+                promises.push(this.getMovieById(id));
+            })
+        }
         return Promise.all(promises).then((values) => {
             return values;
         })
