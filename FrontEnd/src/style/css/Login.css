@@ -253,3 +253,7 @@ input:valid ~ label {
 .portrait {
     opacity: 0;
 }
+
+.addPortrait {
+    margin-top: 10%;
+}
