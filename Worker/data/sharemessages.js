@@ -2,9 +2,9 @@ const mongoCollections = require("../config/mongoCollections");
 const sharemessages = mongoCollections.shareMessages;
 const uuid = require('node-uuid');
 let exportedMethods = {
-    getMessagesBySenderId(SenderId) {
+    getMessagesBySenderName(senderName) {
         return sharemessages().then((sharemessagesCollection)=>{
-            return sharemessagesCollection.find({senderId: SenderId}).toArray();
+            return sharemessagesCollection.find({senderName: senderName}).toArray();
                 // if(sharemessages === null){return "sharemessages not found by SenderId"}
                 // else{return sharemessages}
                 
@@ -12,9 +12,9 @@ let exportedMethods = {
     },
         
        
-    getMessagesByReceiverId(ReceiverId) {
+    getMessagesByReceiverName(receiverName) {
         return sharemessages().then((sharemessagesCollection)=>{
-            return sharemessagesCollection.find({receiverId: ReceiverId}).toArray();
+            return sharemessagesCollection.find({receiverName: receiverName}).toArray();
                 // if(sharemessages === null){return "sharemessages not found by ReceiverId"}
                 // else{return sharemessages}
                 
@@ -34,13 +34,13 @@ let exportedMethods = {
     },
        
        
-    addMessage(senderId, receiverId,movieId, message) {
+    addMessage(senderName, receiverName,movieName, message) {
         return sharemessages().then((sharemessagesCollection)=>{
             let newSharemessage = {
                 _id: uuid.v4(),
-                senderId: senderId,
-                receiverId: receiverId,
-                movieId: movieId,
+                senderName: senderName,
+                receiverName: receiverName,
+                movieName: movieName,
                 message: message
             };
             return sharemessagesCollection.insertOne(newSharemessage).then((newInsert)=>{

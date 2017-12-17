@@ -742,39 +742,39 @@ dbConnection().then((db) => {
         })
         .then((comment) => {
             requestBody = {
-                senderId: u1._id,
-                receiverId: u2._id,
-                movieId: m1._id,
+                senderName: u1.username,
+                receiverName: u2.username,
+                movieName: m1.name,
                 message: "love this"
             }
-            return sharemessages.addMessage(requestBody.senderId, requestBody.receiverId, requestBody.movieId, requestBody.message);
+            return sharemessages.addMessage(requestBody.senderName, requestBody.receiverName, requestBody.movieName, requestBody.message);
         })
         .then((comment) => {
             requestBody = {
-                senderId: u2._id,
-                receiverId: u3._id,
-                movieId: m2._id,
+                senderName: u2.username,
+                receiverName: u3.username,
+                movieName: m2.name,
                 message: "nice"
             }
-            return sharemessages.addMessage(requestBody.senderId, requestBody.receiverId, requestBody.movieId, requestBody.message);
+            return sharemessages.addMessage(requestBody.senderName, requestBody.receiverName, requestBody.movieName, requestBody.message);            
         })
         .then((comment) => {
             requestBody = {
-                senderId: u3._id,
-                receiverId: u1._id,
-                movieId: m4._id,
+                senderName: u3.username,
+                receiverName: u1.username,
+                movieName: m4.name,
                 message: "good!!!!!!!"
             }
-            return sharemessages.addMessage(requestBody.senderId, requestBody.receiverId, requestBody.movieId, requestBody.message);
+            return sharemessages.addMessage(requestBody.senderName, requestBody.receiverName, requestBody.movieName, requestBody.message);            
         })
         .then((comment) => {
             requestBody = {
-                senderId: u4._id,
-                receiverId: u2._id,
-                movieId: m1._id,
+                senderName: u4.username,
+                receiverName: u2.username,
+                movieName: m1.name,
                 message: "interesting"
             }
-            return sharemessages.addMessage(requestBody.senderId, requestBody.receiverId, requestBody.movieId, requestBody.message);
+            return sharemessages.addMessage(requestBody.senderName, requestBody.receiverName, requestBody.movieName, requestBody.message);            
         })
         .then(() => {
             console.log("Done seeding database");
