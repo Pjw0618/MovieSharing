@@ -21,36 +21,36 @@ router.post("/",async (req, res) => {
     })
     
 })
-router.get("/getsenderId/:id", async (req, res) => {
+router.get("/getsenderName/:name", async (req, res) => {
     let response = await nrpSender.sendMessage({
         
         redis: redisConnection,
-        eventName: "sharemessage-getsenderId",
+        eventName: "sharemessage-getsenderName",
         data: {
             
-            message: req.params.id
+            message: req.params.name
         },
         expectsResponse: false
     });
-    redisConnection.on("getsenderId-from-back-share:request:*", (message, channel)=>{
+    redisConnection.on("getsenderName-from-back-share:request:*", (message, channel)=>{
         
         res.json(message.data.message);
     })
     
 });
-router.get("/getreceiverId/:id", async (req, res) => {
+router.get("/getreceiverName/:name", async (req, res) => {
     let response = await nrpSender.sendMessage({
         
         redis: redisConnection,
-        eventName: "sharemessage-getreceiverId",
+        eventName: "sharemessage-getreceiverName",
         data: {
             
-            message: req.params.id
+            message: req.params.name
         },
         expectsResponse: false
     });
     
-    redisConnection.on("getreceiverId-from-back-share:request:*", (message, channel)=>{
+    redisConnection.on("getreceiverName-from-back-share:request:*", (message, channel)=>{
         
         res.json(message.data.message);
     })
