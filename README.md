@@ -70,6 +70,10 @@ Under ./Worker
 node seed.js
 ```
 
+#### Database dump
+
+A MongoDb dump is under the ./Worker/dump 
+
 ## About the front end
 
 We recorded a video to introduce the front end technology, and showing a running demo to introduce the website.
