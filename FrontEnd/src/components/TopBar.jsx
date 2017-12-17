@@ -28,8 +28,8 @@ class TopBar extends React.Component {
             userAccount: 
             Auth.isUserAuthenticated()?
             (<li className="nav-item">
-            <Link className="nav-link js-scroll-trigger" to={`/UserAccount/`+localStorage.getItem('userid')}>{localStorage.getItem("username")}</Link>
-            <Link className="nav-link js-scroll-trigger" to="/" onClick={this.handleLogout}>Log Out</Link>            
+            <a className="nav-link js-scroll-trigger" href={`/UserAccount/`+localStorage.getItem('userid')}>{localStorage.getItem("username")}</a>
+            <a className="nav-link js-scroll-trigger" href="/" onClick={this.handleLogout}>Log Out</a>            
             </li>) :
             (<li className="nav-item">
             <Link className="nav-link js-scroll-trigger" to="/Login" onClick={window.location.reload}>Log In</Link>

@@ -10,7 +10,7 @@ class Wish extends React.Component {
 
     async componentDidMount() {
         let self = this;
-        let userId = localStorage.getItem('userid');
+        let userId = window.location.pathname.split('/')[2];
 
         fetch('http://localhost:3001/user/getUserByDbId/' + userId, {
             method: 'GET',

@@ -4,7 +4,7 @@ class BasicInfo extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userId: localStorage.getItem('userid'),
+            userId: window.location.pathname.split('/')[2],
             user: {
                 username: localStorage.getItem('username'),
                 email: "",

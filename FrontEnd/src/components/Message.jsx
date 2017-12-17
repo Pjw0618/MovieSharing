@@ -7,6 +7,7 @@ class MessageCard extends React.Component {
         super(props);
         this.state = {
             senderId: localStorage.getItem("userid"),
+            senderName: localStorage.getItem("username"),
             receiverName: "",
             receiverId: "",
             message: "",
@@ -30,42 +31,42 @@ class MessageCard extends React.Component {
     handleSend(event) {
         event.preventDefault();
         //get user id by user name
-        fetch("http://localhost:3001/user/getUserByUsername/"+this.state.receiverName)
-        .then((response) => {
-            console.log(response);
-            return response.json();
-        })
-        .catch((e) => {
-            console.log(e);
-            alert("No such user")
-        })
-        .then((message) => {
-            console.log(message);
-            this.setState({
-                receiverId: message._id
-            })
-        })
-        //get movie id by movie name
-        fetch("http://localhost:3001/movie/getmoviebyname/"+this.state.movieName)
-        .then((response) => {
-            console.log(response);
-            return response.json();
-        })
-        .catch((e) => {
-            console.log(e);
-            alert("No such movie")
-        })
-        .then((message) => {
-            console.log(message);
-            this.setState({
-                movieId: message._id
-            })
-        })
+        // fetch("http://localhost:3001/user/getUserByUsername/"+this.state.receiverName)
+        // .then((response) => {
+        //     console.log(response);
+        //     return response.json();
+        // })
+        // .catch((e) => {
+        //     console.log(e);
+        //     alert("No such user")
+        // })
+        // .then((message) => {
+        //     console.log(message);
+        //     this.setState({
+        //         receiverId: message._id
+        //     })
+        // })
+        // //get movie id by movie name
+        // fetch("http://localhost:3001/movie/getmoviebyname/"+this.state.movieName)
+        // .then((response) => {
+        //     console.log(response);
+        //     return response.json();
+        // })
+        // .catch((e) => {
+        //     console.log(e);
+        //     alert("No such movie")
+        // })
+        // .then((message) => {
+        //     console.log(message);
+        //     this.setState({
+        //         movieId: message._id
+        //     })
+        // })
         //send message
         var sendMessage = {
-            "senderId": this.state.senderId,
-            "receiverId": this.state.receiverId,
-            "movieId": this.state.movieId,
+            "senderName": this.state.senderName,
+            "receiverName": this.state.receiverName,
+            "movieName": this.state.movieName,
             "message": this.state.message
         }
         request.post("http://localhost:3001/sharemessage/")
@@ -79,13 +80,13 @@ class MessageCard extends React.Component {
             }
             else{
               console.log(resp);
-              this.setState({
-                receiverName: "",
-                receiverId: "",
-                message: "",
-                movieId: "",
-                movieName: ""
-              })
+            //   this.setState({
+            //     receiverName: "",
+            //     receiverId: "",
+            //     message: "",
+            //     movieId: "",
+            //     movieName: ""
+            //   })
               alert("Submitted");
             }
         })

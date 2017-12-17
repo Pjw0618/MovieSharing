@@ -64,7 +64,7 @@ class AddComment extends React.Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
+        // event.preventDefault();
         var dt = new Date();
 
         var AddComment = {
