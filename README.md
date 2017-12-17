@@ -34,7 +34,7 @@ etc.
 
 You need to have [MongoDB](https://www.mongodb.com), [Elasticsearch](https://www.elastic.co/products/elasticsearch), [ImageMagick](https://www.imagemagick.org/script/index.php) and [Redis](https://redis.io/) installed.
 
-Run the services needed(MongoDB, Elasticsearch and Redis) before going next step.
+Install node modules, and run the services needed(MongoDB, Elasticsearch and Redis) before going next step.
 
 ### Start the website
 
