@@ -62,15 +62,15 @@ class MovieDetail extends React.Component {
                     category: message.category,
                     commentNum: message.commentNum,
                     description: message.description,
-                    directors: message.directors,
+                    directors: typeof message.directors === "string"? message.directors.split(','):message.directors,
                     name: message.name,
                     poster: message.poster,
                     rating: message.score,
                     screenshots: message.screenShots,
-                    starring: message.stars,
+                    starring: typeof message.stars === "string"? message.stars.split(','):message.stars,
                     watchedUsers: message.watchedUsers,
                     wishingUsers: message.wishingUsers,
-                    screenplay: message.writers,
+                    screenplay: typeof message.writers === "string"? message.writers.split(','):message.writers,
                     year: message.year
                 },
                 newName: message.name,
@@ -94,6 +94,9 @@ class MovieDetail extends React.Component {
               console.error(err);
               console.error(resp.body.message);
             }
+            else {
+                alert("Marked As Watched");
+            }
         });
     }
 
@@ -106,6 +109,9 @@ class MovieDetail extends React.Component {
               console.log("internal error:");
               console.error(err);
               console.error(resp.body.message);
+            }
+            else {
+                alert("Added To WishList");
             }
         });
     }
@@ -134,9 +140,9 @@ class MovieDetail extends React.Component {
             body: JSON.stringify({
                 "name": this.state.newName,
                 "year": this.state.newYear,
-                "directors": this.state.newDirectors,
-                "stars": this.state.newStars,
-                "writers": this.state.newWriters,
+                "directors": this.state.newDirectors.split(','),
+                "stars": this.state.newStars.split(','),
+                "writers": this.state.newWriters.split(','),
                 "description": this.state.newDescription,
                 "category": this.state.newCategory
             })
