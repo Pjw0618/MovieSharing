@@ -72,7 +72,9 @@ node seed.js
 
 #### Database dump
 
-A MongoDb dump is under the ./Worker/dump 
+A MongoDb dump is under the ./Worker/dump/movie-sharing
+
+A Elasticsearch dump is under the ./Worker/dump/elasticsearch-dump
 
 ## About the front end
 
